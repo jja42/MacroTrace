@@ -1,3 +1,5 @@
 .vscode/
 *.exe
 *.ps1
+temp/
+tracefiles/
