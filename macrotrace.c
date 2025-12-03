@@ -3,6 +3,8 @@
 #include "macrointerpret.h"
 #include "macrotrace.h"
 
+bool recording = false;
+
 // Callback for keyboard events
 void handle_keyboard_event(uiohook_event * const event) {
     switch (event->type) {
@@ -42,27 +44,18 @@ void handle_mouse_event(uiohook_event * const event) {
 
 // Main event dispatcher
 void handle_event(uiohook_event * const event) {
+    if(!recording){
+        if (event->type == EVENT_KEY_RELEASED) 
+        {
+        printf("Recording Has Begun\n");
+        recording = true;
+        return;
+        }
+        return;
+    }
     if (event->type >= EVENT_KEY_PRESSED && event->type <= EVENT_KEY_RELEASED) {
         handle_keyboard_event(event);
     } else if (event->type >= EVENT_MOUSE_PRESSED && event->type <= EVENT_MOUSE_MOVED) {
         handle_mouse_event(event);
     }
-}
-
-void handle_initial_event(uiohook_event * const event){
-    if (event->type == EVENT_KEY_RELEASED) 
-    {
-        printf("Recording Has Begun\n");
-        hook_stop();
-    }
-}
-
-void set_hook(bool recording){
-    if(!recording){
-    hook_set_dispatch_proc(handle_initial_event);
-    }
-    else{
-        hook_set_dispatch_proc(handle_event);
-    }
-
 }

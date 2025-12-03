@@ -9,17 +9,9 @@ int main(void) {
 
     printf("Press Any Keyboard Button to Begin Recording.\n");
 
-    set_hook(recording);
+    hook_set_dispatch_proc(handle_event);
 
-    // Start the hook
-    if (hook_run() != UIOHOOK_SUCCESS) {
-        fprintf(stderr, "Failed to start hook!\n");
-        return EXIT_FAILURE;
-    }
-
-    recording = true;
-    set_hook(recording);
-
+    //Start the hook
     if (hook_run() != UIOHOOK_SUCCESS) {
         fprintf(stderr, "Failed to start hook!\n");
         return EXIT_FAILURE;
