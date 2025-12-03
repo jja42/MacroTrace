@@ -1,4 +1,4 @@
-prefix="C:/Users/omega/libuiohook"
+prefix="C:/libuiohook"
 exec_prefix=${prefix}
 libdir=${prefix}/build
 includedir=${prefix}/include
