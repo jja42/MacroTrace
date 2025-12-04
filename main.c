@@ -21,11 +21,11 @@ int main(void) {
 
     printf("Recording Stopped.\n");
 
-    char filename[100];
-    printf("Please enter a filename for your recording.\n");
-    printf("Filenames Should be One Uninterrupted Phrase. No Spaces.\n");
-    scanf("%s", filename);
-    save_trace_file(filename);
+    // char filename[100];
+    // printf("Please enter a filename for your recording.\n");
+    // printf("Filenames Should be One Uninterrupted Phrase. No Spaces.\n");
+    // scanf("%s", filename);
+    // save_trace_file(filename);
 
     return EXIT_SUCCESS;
 }

@@ -1,4 +1,5 @@
 #include "macrointerpret.h"
+#include "list.h"
 
 char* keycode_to_string(uint16_t keycode) {
     switch (keycode) {
@@ -150,4 +151,94 @@ char* button_to_mouse_input(uint16_t button)
 
     default: return "Unknown";
     }
-} 
+}
+
+JsonObj* json_from_keyboard_event(uint64_t time, event_type type, uint16_t keycode){
+    list_t* rootList = new_list(1);
+    JsonObj* timeObj = init_json_object("Timestamp",time,J_INT);
+    JsonObj* typeObj;
+
+    switch (type)
+    {
+    case EVENT_KEY_PRESSED:
+        typeObj = init_json_object("EventType", "Key Press",J_STRING);
+        break;
+    case EVENT_KEY_RELEASED:
+        typeObj = init_json_object("EventType", "Key Release",J_STRING);
+        break;
+    default:
+        typeObj = init_json_object("EventType", "Unknown Event",J_STRING);
+        break;
+    }
+
+    char* key = keycode_to_string(keycode);
+    JsonObj* keycodeObj = init_json_object("Key",key,J_STRING);
+    
+    list_add(rootList,typeObj);
+    list_add(rootList,keycodeObj);
+    list_add(rootList,timeObj);
+
+    JsonObj* rootObt = init_json_object(NULL,rootList,JSON);
+
+    return rootObt;
+}
+
+JsonObj* json_from_mouse_event(uint64_t time, event_type type, uint16_t button, int16_t  x, int16_t  y){
+    list_t* rootList = new_list(1);
+    JsonObj* timeObj = init_json_object("Timestamp",time,J_INT);
+    JsonObj* typeObj;
+    JsonObj* eventObj;
+
+    switch (type)
+    {
+    case EVENT_MOUSE_PRESSED:
+        typeObj = init_json_object("EventType", "Mouse Button Press",J_STRING);
+        eventObj = init_json_object("Button", button_to_mouse_input(button),J_STRING);
+        break;
+    case EVENT_MOUSE_RELEASED:
+        typeObj = init_json_object("EventType", "Mouse Button Release",J_STRING);
+        eventObj = init_json_object("Button", button_to_mouse_input(button),J_STRING);
+        break;
+    case EVENT_MOUSE_MOVED:
+        typeObj = init_json_object("EventType", "Mouse Movement",J_STRING);
+        list_t* positionList = new_list(2);
+        JsonObj* xPos = init_json_object("X",x,J_INT);
+        JsonObj* yPos = init_json_object("Y",y,J_INT);
+        list_add(positionList, xPos);
+        list_add(positionList, yPos);
+        eventObj = init_json_object("Position", positionList, JSON);
+        break;
+    }
+
+    list_add(rootList,typeObj);
+    list_add(rootList,eventObj);
+    list_add(rootList,timeObj);
+
+    JsonObj* rootObt = init_json_object(NULL,rootList,JSON);
+
+    return rootObt;
+}   
+
+JsonObj* json_from_mouse_wheel_event(uint64_t time, event_type type, uint16_t amount, int16_t  rotation, uint8_t  direction){
+    list_t* rootList = new_list(1);
+    JsonObj* timeObj = init_json_object("Timestamp",time,J_INT);
+
+    JsonObj* typeObj = init_json_object("EventType", "Mouse Wheel Scroll",J_STRING);
+    
+    list_t* dataList = new_list(3);
+    JsonObj* amountObj = init_json_object("Scroll Amount", amount, J_INT);
+    JsonObj* directionObj = init_json_object("Direction", direction, J_INT);
+    JsonObj* rotationObj = init_json_object("Rotation", rotation, J_INT);
+    list_add(dataList,amountObj);
+    list_add(dataList,directionObj);
+    list_add(dataList,rotationObj);
+    JsonObj* eventObj = init_json_object("Data", dataList, JSON);
+
+    list_add(rootList,typeObj);
+    list_add(rootList,eventObj);
+    list_add(rootList,timeObj);
+
+    JsonObj* rootObt = init_json_object(NULL,rootList,JSON);
+
+    return rootObt;
+}

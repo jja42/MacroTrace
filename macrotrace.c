@@ -7,17 +7,6 @@
 bool recording = false;
 bool end = false;
 
-void log_and_save_event(const char *fmt, ...) {
-    char buffer[256];
-    va_list args;
-    va_start(args, fmt);
-    vsnprintf(buffer, sizeof(buffer), fmt, args);
-    va_end(args);
-
-    printf("%s", buffer);
-    write_temp_trace_file(buffer);
-}
-
 void check_exit(uiohook_event * const event){
     if(event->data.keyboard.keycode == VC_ESCAPE){
         if(!end){
@@ -38,10 +27,10 @@ void handle_keyboard_event(uiohook_event * const event) {
     switch (event->type) {
         case EVENT_KEY_PRESSED:
             check_exit(event);
-            log_and_save_event("Key Pressed: %s\n", keycode_to_string(event->data.keyboard.keycode));
+            printf("Key Pressed: %s\n", keycode_to_string(event->data.keyboard.keycode));
             break;
         case EVENT_KEY_RELEASED:
-            log_and_save_event("Key Released: %s\n", keycode_to_string(event->data.keyboard.keycode));
+            printf("Key Released: %s\n", keycode_to_string(event->data.keyboard.keycode));
             break;
         default:
             break;
@@ -52,20 +41,22 @@ void handle_keyboard_event(uiohook_event * const event) {
 void handle_mouse_event(uiohook_event * const event) {
     switch (event->type) {
         case EVENT_MOUSE_PRESSED:
-            log_and_save_event("Mouse Button Pressed: %s at (%d, %d)\n",
+            printf("Mouse Button Pressed: %s at (%d, %d)\n",
                    button_to_mouse_input(event->data.mouse.button),
                    event->data.mouse.x,
                    event->data.mouse.y);
             break;
         case EVENT_MOUSE_RELEASED:
-            log_and_save_event("Mouse Button Released: %s at (%d, %d)\n",
+            printf("Mouse Button Released: %s at (%d, %d)\n",
                    button_to_mouse_input(event->data.mouse.button),
                    event->data.mouse.x,
                    event->data.mouse.y);
             break;
         case EVENT_MOUSE_MOVED:
-            log_and_save_event("Mouse Moved to (%d, %d)\n", event->data.mouse.x, event->data.mouse.y);
+            printf("Mouse Moved to (%d, %d)\n", event->data.mouse.x, event->data.mouse.y);
             break;
+        case EVENT_MOUSE_WHEEL:
+            printf("Mouse Wheel Scrolled %d Units.\n", event->data.wheel.rotation);
         default:
             break;
     }
@@ -86,7 +77,7 @@ void handle_event(uiohook_event * const event) {
     }
     if (event->type >= EVENT_KEY_PRESSED && event->type <= EVENT_KEY_RELEASED) {
         handle_keyboard_event(event);
-    } else if (event->type >= EVENT_MOUSE_PRESSED && event->type <= EVENT_MOUSE_MOVED) {
+    } else if (event->type >= EVENT_MOUSE_PRESSED && event->type <= EVENT_MOUSE_MOVED || event->type == EVENT_MOUSE_WHEEL) {
         handle_mouse_event(event);
     }
 }
