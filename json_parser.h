@@ -17,7 +17,12 @@ NONE
 typedef struct {
 char* key;
 ObjType type;
-void* value;
+union {
+    char* s;
+    int num;
+    bool boolean;
+    void* ptr;  //for arrays/JSON obj
+} value;
 } JsonObj;
 
 //Wrapper for the two following functions. Consolidated into one neat function
@@ -36,10 +41,10 @@ int find_next_string(char* buffer, int index);
 char* parse_string(char* buffer, int* index);
 
 //return the int given a starting index
-int* parse_int(char* buffer, int* index);
+int parse_int(char* buffer, int* index);
 
 //return the bool given a starting index
-bool* parse_bool(char* buffer, int* index);
+bool parse_bool(char* buffer, int* index);
 
 //return the array given a starting index
 list_t* parse_array(char* buffer, int* index);
@@ -59,8 +64,20 @@ void* get_value(char* buffer, int* index, ObjType type);
 //Returns the number of chars in the file. 
 long get_filesize(FILE* file);
 
-//Create and return new Json Object
-JsonObj* init_json_object(char* key, void* value, ObjType type);
+//Create and return new Json Object (JSON)
+JsonObj* init_json_object(char* key, void* value);
+
+//Create and return new Json Object (JARRAY)
+JsonObj* init_json_array(char* key, void* value);
+
+//Create and return new Json Object (J_BOOL)
+JsonObj* init_json_bool(char* key, bool val);
+
+//Create and return new Json Object (J_INT)
+JsonObj* init_json_int(char* key, int val);
+
+//Create and return new Json Object (J_STRING)
+JsonObj* init_json_string(char* key, char* val);
 
 //return the index of the comma separating the next object
 int get_next_obj_index(char* buffer,int index);
@@ -88,5 +105,14 @@ list_t* json_list_get(list_t* json, char* key);
 
 //given a key, get a json object from a list of json objects.
 JsonObj* json_obj_get(list_t* json_elements, char* key);
+
+//Get value as an int
+int get_int_value(char* buffer, int* index);
+
+//Get value as a bool
+bool get_bool_value(char* buffer, int* index);
+
+//Get value as a string
+char* get_string_value(char* buffer, int* index);
 
 #endif

@@ -109,7 +109,7 @@ list_t* read_buffer_into_objects(char* buffer, bool is_substring){
                     }
 
                     //create a json object for our data
-                    JsonObj* obj = init_json_object(NULL, value, JSON);
+                    JsonObj* obj = init_json_object(NULL, value);
 
                     //Handle Malloc Error
                     if(obj == NULL){
@@ -174,26 +174,55 @@ list_t* read_buffer_into_objects(char* buffer, bool is_substring){
             return NULL;
         }
 
-        //Get our value
-        void* value = get_value(buffer, &curr_index, type);
-
-        if(value == NULL){
-            printf("Failed to obtain value.\n");
-            free(key);
-            free_list(object_list);
-            return NULL;
-        }
-
-        //create a json object for our data
-        JsonObj* obj = init_json_object(key, value, type);
-
+        //Create a json object for our data and Get Value
+        JsonObj* obj = NULL;
         //Handle Malloc Error
         if(obj == NULL){
             printf("Failed to allocate JsonObj.\n");
             free(key);
-            free(value);
             free_list(object_list);
             return NULL;
+        }
+        switch (type)
+        {
+        case JSON:
+        case J_ARRAY:   
+            void* value = get_value(buffer, &curr_index, type);
+            if(value == NULL){
+                printf("Failed to obtain value.\n");
+                free(key);
+                free_list(object_list);
+                return NULL;
+            }
+            switch (type)
+            {
+            case JSON:
+                 obj = init_json_object(key, value);
+                break;
+            case J_ARRAY:
+                obj = init_json_array(key, value);
+                break;
+            default:
+                break;
+            }
+            break;
+        case J_BOOL:
+            bool b_value = get_bool_value(buffer, &curr_index);
+            obj = init_json_bool(key,b_value);
+            break;
+        case J_INT:
+            int i_value = get_int_value(buffer, &curr_index);
+            obj = init_json_int(key,i_value);
+            break;;
+        case J_STRING:
+            char* s_value = get_string_value(buffer, &curr_index);
+            obj = init_json_string(key,s_value);
+            break;
+        default:
+            printf("Type Error at index %d\n", curr_index);
+            free(key);
+            free_list(object_list);
+            break;
         }
 
         list_add(object_list, obj);
@@ -255,14 +284,8 @@ ObjType get_value_type(char* buffer, int index){
 void* get_value(char* buffer, int* index, ObjType type){
     switch (type)
     {
-    case J_INT:
-        return parse_int(buffer,index);
-    case J_STRING:
-        return parse_string(buffer, index);
     case J_ARRAY:
         return parse_array(buffer, index);
-    case J_BOOL:
-        return parse_bool(buffer, index);
     case JSON:
         return parse_json(buffer, index);
     default:
@@ -270,11 +293,55 @@ void* get_value(char* buffer, int* index, ObjType type){
     }
 }
 
-JsonObj* init_json_object(char* key, void* value, ObjType type){
+int get_int_value(char* buffer, int* index) {
+    return parse_int(buffer, index);  // returns int directly
+}
+
+bool get_bool_value(char* buffer, int* index) {
+    return parse_bool(buffer, index); // returns bool directly
+}
+
+char* get_string_value(char* buffer, int* index) {
+    return parse_string(buffer, index); // returns allocated string
+}
+
+JsonObj* init_json_object(char* key, void* value){
     JsonObj* obj = malloc(sizeof(JsonObj));
     obj->key = key;
-    obj->value = value;
-    obj->type = type;
+    obj->value.ptr = value;
+    obj->type = JSON;
+    return obj;
+}
+
+JsonObj* init_json_array(char* key, void* value){
+    JsonObj* obj = malloc(sizeof(JsonObj));
+    obj->key = key;
+    obj->value.ptr = value;
+    obj->type = J_ARRAY;
+    return obj;
+}
+
+JsonObj* init_json_bool(char* key, bool val){
+    JsonObj* obj = malloc(sizeof(JsonObj));
+    obj->key = key;
+    obj->value.boolean = val;
+    obj->type = J_BOOL;
+    return obj;
+}
+
+JsonObj* init_json_string(char* key, char* val){
+    JsonObj* obj = malloc(sizeof(JsonObj));
+    obj->key = key;
+    obj->value.s = val;
+    obj->type = J_STRING;
+    return obj;
+}
+
+JsonObj* init_json_int(char* key, int val){
+    JsonObj* obj = malloc(sizeof(JsonObj));
+    obj->key = key;
+    obj->value.num = val;
+    obj->type = J_INT;
     return obj;
 }
 
@@ -332,13 +399,9 @@ char* parse_string(char* buffer, int* start_index){
     return string;
 }
 
-int* parse_int(char* buffer, int* index){
-    //Allocate an int
-    int* i = malloc(sizeof(int));
-    if(i == NULL){
-        printf("Failed to allocate int.\n");
-        return NULL;
-    }
+int parse_int(char* buffer, int* index){
+
+    int i;
 
     //get end of int
     int end_index = *index;
@@ -351,8 +414,7 @@ int* parse_int(char* buffer, int* index){
 
     if (str == NULL) {
         printf("Failed to allocate for int conversion.\n");
-        free(i);
-        return NULL;
+        return 0;
     }
 
     //copy from buffer into string
@@ -361,7 +423,7 @@ int* parse_int(char* buffer, int* index){
     str[length] = '\0';
 
     //convert string value into int
-    *i = atoi(str);
+    i = atoi(str);
 
     //update index
     *index = end_index;
@@ -371,24 +433,21 @@ int* parse_int(char* buffer, int* index){
     return i;
 }
 
-bool* parse_bool(char* buffer, int* index){
-    bool* b = malloc(sizeof(bool));
-    if(b == NULL){
-        printf("Failed to allocate bool.\n");
-        return NULL;
-    }
+bool parse_bool(char* buffer, int* index){
+    bool b;
+
     //manual string comparison for true/false
     if(strncmp(buffer + *index, "true", 4) == 0){
-        *b = true;
+        b = true;
         *index += 4;
         return b;
     } 
     if(strncmp(buffer + *index, "false", 5) == 0){
-        *b = false;
+        b = false;
         *index += 5;
         return b;
     }
-    return NULL;
+    return false;
 }
 
 list_t* parse_array(char* buffer, int* index){
@@ -507,23 +566,23 @@ void print_json(list_t* json_objects){
             switch (object->type)
             {
             case J_STRING:
-                char* value = (char*)object->value;
+                char* value = object->value.s;
                 printf("%s : %s\n", key, value);
                 break;
 
             case J_INT:
-                int* val = (int*)object->value;
-                printf("%s : %d\n", key, *val);
+                int val = object->value.num;
+                printf("%s : %d\n", key, val);
                 break;
 
             case J_BOOL:
-                bool* b = (bool*)object->value;
-                printf("%s : %d\n", key, *b);
+                bool b = object->value.boolean;
+                printf("%s : %d\n", key, b);
                 break;
 
             //print [ then print each object and then print ]
             case J_ARRAY:
-                list_t* array = (list_t*)object->value;
+                list_t* array = (list_t*)object->value.ptr;
                 printf("%s : [\n", key);
                 print_json(array);
                 printf("]\n");
@@ -531,7 +590,7 @@ void print_json(list_t* json_objects){
 
             //print { then print each object and then print }
             case JSON:
-                list_t* json = (list_t*)object->value;
+                list_t* json = (list_t*)object->value.ptr;
                 printf("Json Obj:\n{\n");
                 print_json(json);
                 printf("}\n");
@@ -560,7 +619,7 @@ void free_json(JsonObj* obj){
     //if we are a json holder or an array we have multiple child objects
     //we must loop through our list and free recursively
     if(obj->type == JSON || obj->type == J_ARRAY){
-        list_t* l = (list_t*)obj->value;
+        list_t* l = (list_t*)obj->value.ptr;
         for(int i = 0; i < l->capacity; i++){
             if(l->data[i] != NULL){
                 free_json(l->data[i]);
@@ -569,7 +628,13 @@ void free_json(JsonObj* obj){
         free_list(l);
     }
     else{
-        free(obj->value);
+        switch (obj->type)
+        {
+        case J_STRING:
+            free(obj->value.s);
+        default:
+            break;
+        }
     }
     free(obj);
 }
@@ -582,7 +647,7 @@ list_t* json_list_get(list_t* json, char* key){
             //cast to JsonObj and check if key matches string
             JsonObj* object = (JsonObj*)json->data[j];
             if(strcmp(object->key, key) == 0){
-                return (list_t*)object->value;
+                return (list_t*)object->value.ptr;
             }
         }
     }
