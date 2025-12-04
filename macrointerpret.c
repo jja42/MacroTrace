@@ -327,7 +327,7 @@ char* json_to_string(JsonObj* obj){
             }
             free(items[i]);
         }
-        strcat(buffer, "]\n");
+        strcat(buffer, "]");
         free(items);
         log_event("Converted Array Value");
         break;
@@ -339,7 +339,7 @@ char* json_to_string(JsonObj* obj){
         log_event("Allocated Items");
         log_event_fmt("Num Children: %d", children->count);
         //Allocate buffer
-        size = 4; // {\n }\n
+        size = 3; // {\n }
         if(obj->key != NULL){
             //Quotes, colon and space
             size += strlen(obj->key) + 4;
@@ -361,7 +361,7 @@ char* json_to_string(JsonObj* obj){
         if(obj->key != NULL){
             strcpy(buffer,"\"");
             strcat(buffer,obj->key);
-            strcat(buffer,"\": {\n");
+            strcat(buffer,"\": \n{");
         }
         else{
             strcpy(buffer, "{\n");
@@ -377,7 +377,7 @@ char* json_to_string(JsonObj* obj){
             }
             free(items[i]);
         }
-        strcat(buffer, "}\n");
+        strcat(buffer, "}");
         free(items);
         log_event("Converted JSON Value");
         break;
