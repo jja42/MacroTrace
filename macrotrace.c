@@ -6,6 +6,7 @@
 
 bool recording = false;
 bool end = false;
+uint64_t initial_timestamp;
 
 void check_exit(uiohook_event * const event){
     if(event->data.keyboard.keycode == VC_ESCAPE){
@@ -69,6 +70,7 @@ void handle_event(uiohook_event * const event) {
         {
         printf("Recording Has Begun\n");
         printf("Press Escape Twice in a Row to Stop Recording.\n");
+        initial_timestamp = event->time;
         recording = true;
         access_temp_trace_file();
         return;
@@ -77,8 +79,10 @@ void handle_event(uiohook_event * const event) {
     }
     if (event->type >= EVENT_KEY_PRESSED && event->type <= EVENT_KEY_RELEASED) {
         handle_keyboard_event(event);
+        save_event(event, initial_timestamp);
     } else if (event->type >= EVENT_MOUSE_PRESSED && event->type <= EVENT_MOUSE_MOVED || event->type == EVENT_MOUSE_WHEEL) {
         handle_mouse_event(event);
+        save_event(event, initial_timestamp);
     }
 }
 

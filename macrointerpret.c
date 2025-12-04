@@ -1,5 +1,8 @@
 #include "macrointerpret.h"
 #include "list.h"
+#include <stdlib.h>
+#include <string.h>
+#include "macrolog.h"
 
 char* keycode_to_string(uint16_t keycode) {
     switch (keycode) {
@@ -153,60 +156,61 @@ char* button_to_mouse_input(uint16_t button)
     }
 }
 
-JsonObj* json_from_keyboard_event(uint64_t time, event_type type, uint16_t keycode){
+JsonObj* json_from_keyboard_event(int time, event_type type, int keycode){
     list_t* rootList = new_list(1);
-    JsonObj* timeObj = init_json_object("Timestamp",time,J_INT);
+    JsonObj* timeObj = init_json_int(strdup("Timestamp"),time);
     JsonObj* typeObj;
 
     switch (type)
     {
     case EVENT_KEY_PRESSED:
-        typeObj = init_json_object("EventType", "Key Press",J_STRING);
+        typeObj = init_json_string(strdup("EventType"), strdup("Key Press"));
         break;
     case EVENT_KEY_RELEASED:
-        typeObj = init_json_object("EventType", "Key Release",J_STRING);
+        typeObj = init_json_string(strdup("EventType"), strdup("Key Release"));
         break;
     default:
-        typeObj = init_json_object("EventType", "Unknown Event",J_STRING);
+        typeObj = init_json_string(strdup("EventType"), strdup("Unknown Event"));
         break;
     }
 
     char* key = keycode_to_string(keycode);
-    JsonObj* keycodeObj = init_json_object("Key",key,J_STRING);
+    JsonObj* keycodeObj = init_json_string(strdup("Key"),key);
     
     list_add(rootList,typeObj);
     list_add(rootList,keycodeObj);
     list_add(rootList,timeObj);
 
-    JsonObj* rootObt = init_json_object(NULL,rootList,JSON);
+    JsonObj* rootObt = init_json_object(NULL,rootList);
+    log_event("Key Event JSON created");
 
     return rootObt;
 }
 
-JsonObj* json_from_mouse_event(uint64_t time, event_type type, uint16_t button, int16_t  x, int16_t  y){
+JsonObj* json_from_mouse_event(int time, event_type type, int button, int  x, int  y){
     list_t* rootList = new_list(1);
-    JsonObj* timeObj = init_json_object("Timestamp",time,J_INT);
+    JsonObj* timeObj = init_json_int(strdup("Timestamp"),time);
     JsonObj* typeObj;
     JsonObj* eventObj;
 
     switch (type)
     {
     case EVENT_MOUSE_PRESSED:
-        typeObj = init_json_object("EventType", "Mouse Button Press",J_STRING);
-        eventObj = init_json_object("Button", button_to_mouse_input(button),J_STRING);
+        typeObj = init_json_string(strdup("EventType"), strdup("Mouse Button Press"));
+        eventObj = init_json_string(strdup("Button"), strdup(button_to_mouse_input(button)));
         break;
     case EVENT_MOUSE_RELEASED:
-        typeObj = init_json_object("EventType", "Mouse Button Release",J_STRING);
-        eventObj = init_json_object("Button", button_to_mouse_input(button),J_STRING);
+        typeObj = init_json_string(strdup("EventType"), strdup("Mouse Button Release"));
+        eventObj = init_json_string(strdup("Button"), strdup(button_to_mouse_input(button)));
         break;
     case EVENT_MOUSE_MOVED:
-        typeObj = init_json_object("EventType", "Mouse Movement",J_STRING);
+        typeObj = init_json_string(strdup("EventType"), strdup("Mouse Movement"));
         list_t* positionList = new_list(2);
-        JsonObj* xPos = init_json_object("X",x,J_INT);
-        JsonObj* yPos = init_json_object("Y",y,J_INT);
+        JsonObj* xPos = init_json_int(strdup("X"),x);
+        JsonObj* yPos = init_json_int(strdup("Y"),y);
         list_add(positionList, xPos);
         list_add(positionList, yPos);
-        eventObj = init_json_object("Position", positionList, JSON);
+        eventObj = init_json_object(strdup("Position"), positionList);
         break;
     }
 
@@ -214,31 +218,172 @@ JsonObj* json_from_mouse_event(uint64_t time, event_type type, uint16_t button, 
     list_add(rootList,eventObj);
     list_add(rootList,timeObj);
 
-    JsonObj* rootObt = init_json_object(NULL,rootList,JSON);
+    JsonObj* rootObt = init_json_object(NULL,rootList);
+    log_event("Mouse Event JSON created");
 
     return rootObt;
 }   
 
-JsonObj* json_from_mouse_wheel_event(uint64_t time, event_type type, uint16_t amount, int16_t  rotation, uint8_t  direction){
+JsonObj* json_from_mouse_wheel_event(int time, event_type type, int amount, int  rotation, int  direction){
     list_t* rootList = new_list(1);
-    JsonObj* timeObj = init_json_object("Timestamp",time,J_INT);
+    JsonObj* timeObj = init_json_int(strdup("Timestamp"),time);
 
-    JsonObj* typeObj = init_json_object("EventType", "Mouse Wheel Scroll",J_STRING);
+    JsonObj* typeObj = init_json_string(strdup("EventType"), strdup("Mouse Wheel Scroll"));
     
     list_t* dataList = new_list(3);
-    JsonObj* amountObj = init_json_object("Scroll Amount", amount, J_INT);
-    JsonObj* directionObj = init_json_object("Direction", direction, J_INT);
-    JsonObj* rotationObj = init_json_object("Rotation", rotation, J_INT);
+    JsonObj* amountObj = init_json_int(strdup("Scroll Amount"), amount);
+    JsonObj* directionObj = init_json_int(strdup("Direction"), direction);
+    JsonObj* rotationObj = init_json_int(strdup("Rotation"), rotation);
     list_add(dataList,amountObj);
     list_add(dataList,directionObj);
     list_add(dataList,rotationObj);
-    JsonObj* eventObj = init_json_object("Data", dataList, JSON);
+    JsonObj* eventObj = init_json_object(strdup("Data"), dataList);
 
     list_add(rootList,typeObj);
     list_add(rootList,eventObj);
     list_add(rootList,timeObj);
 
-    JsonObj* rootObt = init_json_object(NULL,rootList,JSON);
+    JsonObj* rootObt = init_json_object(NULL,rootList);
+
+    log_event("Wheel Event JSON created");
 
     return rootObt;
+}
+
+char* json_to_string(JsonObj* obj){
+    char* buffer;
+    int size;
+    switch (obj->type)
+    {
+    case J_INT:
+        char int_value[12]; 
+        snprintf(int_value, sizeof(int_value), "%d", obj->value.num);
+        //2 extra quotes + colon + space
+        size = strlen(obj->key) + strlen(int_value) + 4;
+        buffer = malloc(sizeof(char) * size + 1);
+        if (buffer == NULL)
+        {
+            printf("Failed to allocate buffer");
+            return NULL;
+        }
+        snprintf(buffer, size + 1, "\"%s\": %s", obj->key, int_value);
+        log_event("Converted Int Value");
+        break;
+    case J_BOOL:
+        const char* bool_value = obj->value.boolean ? "true" : "false";
+        //2 extra quotes + colon + space
+        size = strlen(obj->key) + strlen(bool_value) + 4;
+        buffer = malloc(sizeof(char) * size + 1);
+        if (buffer == NULL)
+        {
+            printf("Failed to allocate buffer");
+            return NULL;
+        }
+        snprintf(buffer, size + 1, "\"%s\": %s", obj->key, bool_value);
+        log_event("Converted Bool Value");
+        break;
+    case J_STRING:
+        //4 extra quotes + colon + space
+        size = strlen(obj->key) + strlen(obj->value.s) + 6;
+        buffer = malloc(sizeof(char) * size + 1);
+        if (buffer == NULL)
+        {
+            printf("Failed to allocate buffer");
+            return NULL;
+        }
+        snprintf(buffer, size + 1, "\"%s\": \"%s\"", obj->key, obj->value.s);
+        log_event("Converted String Value");
+        break;
+    case J_ARRAY:
+    {
+        list_t* array = (list_t*)obj->value.ptr;
+        char** items = malloc(array->count*sizeof(char*));
+        //Allocate buffer
+        size = 4; // [\n ]\n
+        size += strlen(obj->key);
+        for (int i = 0; i < array->count; i++) {
+            items[i] = json_to_string((JsonObj*)array->data[i]);
+                if (i != array->count - 1){
+                    size += strlen(items[i]) + 2; // ",\n"
+                }
+                else
+                {
+                    size += strlen(items[i]) + 1; //\n
+                }
+        }
+        buffer = malloc((size + 1) * sizeof(char));
+        //Populate Buffer
+        strcpy(buffer,"\"");
+        strcat(buffer,obj->key);
+        strcat(buffer,"\": [\n");
+        for (int i = 0; i < array->count; i++) {
+            strcat(buffer, items[i]);
+            if (i != array->count - 1) 
+            {
+                strcat(buffer, ",\n");
+            }
+            else{
+                strcat(buffer,"\n");
+            }
+            free(items[i]);
+        }
+        strcat(buffer, "]\n");
+        free(items);
+        log_event("Converted Array Value");
+        break;
+    }
+    case JSON:{
+        log_event("Converting JSON Value");
+        list_t* children = (list_t*)obj->value.ptr;
+        char** items = malloc(children->count*sizeof(char*));
+        log_event("Allocated Items");
+        log_event_fmt("Num Children: %d", children->count);
+        //Allocate buffer
+        size = 4; // {\n }\n
+        if(obj->key != NULL){
+            //Quotes, colon and space
+            size += strlen(obj->key) + 4;
+        }
+        for (int i = 0; i < children->count; i++) {
+            items[i] = json_to_string((JsonObj*)children->data[i]);
+            if (i != children->count - 1){
+                    size += strlen(items[i]) + 2; // ",\n"
+                }
+                else
+                {
+                    size += strlen(items[i]) + 1; //\n
+                }
+        }
+        log_event("Allocating Buffer");
+        buffer = malloc((size + 1) * sizeof(char));
+        log_event_fmt("JSON Total Size: %d", size);
+        //Populate Buffer
+        if(obj->key != NULL){
+            strcpy(buffer,"\"");
+            strcat(buffer,obj->key);
+            strcat(buffer,"\": {\n");
+        }
+        else{
+            strcpy(buffer, "{\n");
+        }
+        for (int i = 0; i < children->count; i++) {
+            strcat(buffer, items[i]);
+            if (i != children->count - 1) 
+            {
+                strcat(buffer, ",\n");
+            }
+            else{
+                strcat(buffer,"\n");
+            }
+            free(items[i]);
+        }
+        strcat(buffer, "}\n");
+        free(items);
+        log_event("Converted JSON Value");
+        break;
+    }
+    default:
+        return NULL;
+    }
+    return buffer;
 }

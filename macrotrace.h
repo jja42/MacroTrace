@@ -10,6 +10,4 @@ void handle_mouse_event(uiohook_event * const event);
 
 void handle_event(uiohook_event * const event);
 
-void save_event(uiohook_event * const event);
-
 #endif

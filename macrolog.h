@@ -8,4 +8,6 @@ void init_logger();
 
 void log_event(char* event);
 
+void log_event_fmt(const char* fmt, ...);
+
 #endif

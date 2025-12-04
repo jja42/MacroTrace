@@ -6,11 +6,9 @@
 
 void access_temp_trace_file();
 
-void write_temp_trace_file(char* line);
+void write_temp_trace_file();
 
-void close_temp_trace_file();
-
-void save_event(uiohook_event * const event);
+void save_event(uiohook_event * const event, uint64_t initial_time);
 
 void save_trace_file(char* filename);
 

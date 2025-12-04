@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "macrosave.h"
+#include "macrolog.h"
 
 int main(void) {
 
@@ -17,15 +18,16 @@ int main(void) {
         fprintf(stderr, "Failed to start hook!\n");
         return EXIT_FAILURE;
     }
-    close_temp_trace_file();
+    write_temp_trace_file();
 
     printf("Recording Stopped.\n");
+    log_event("Done Recording");
 
-    // char filename[100];
-    // printf("Please enter a filename for your recording.\n");
-    // printf("Filenames Should be One Uninterrupted Phrase. No Spaces.\n");
-    // scanf("%s", filename);
-    // save_trace_file(filename);
+    char filename[100];
+    printf("Please enter a filename for your recording.\n");
+    printf("Filenames Should be One Uninterrupted Phrase. No Spaces.\n");
+    scanf("%s", filename);
+    save_trace_file(filename);
 
     return EXIT_SUCCESS;
 }

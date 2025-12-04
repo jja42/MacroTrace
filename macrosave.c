@@ -3,6 +3,8 @@
 #include <ctype.h>
 #include "list.h"
 #include "macrointerpret.h"
+#include <stdlib.h>
+#include "macrolog.h"
 
 FILE* temptraceFile;
 list_t* json_objects;
@@ -15,14 +17,22 @@ json_objects = new_list(1);
 
 //Create Trace File
 temptraceFile = fopen("temp/temp_trace.json", "w");
+
+init_logger();
 }
 
 void write_temp_trace_file(){
-    JsonObj* mainObj = init_json_object("Events",json_objects,J_ARRAY);
-    jsonRoot = init_json_object(NULL,mainObj,JSON);
-}
-
-void close_temp_trace_file(){
+    log_event_fmt("Json Objects Length: %d", json_objects->count);
+    JsonObj* mainObj = init_json_array(strdup("Events"),json_objects);
+    list_t* json = new_list(1);
+    list_add(json,mainObj);
+    log_event("Main Json Initialized");
+    jsonRoot = init_json_object(NULL,json);
+    log_event("Root Json Initialized");
+    char* buffer = json_to_string(jsonRoot);
+    log_event("Buffer Initialized");
+    fwrite(buffer,sizeof(char),strlen(buffer),temptraceFile);
+    free(buffer);
     fclose(temptraceFile);
     free_json(jsonRoot);
     free_list(json_objects);
@@ -39,7 +49,7 @@ void sanitize_filename(char *str) {
 void save_trace_file(char* filename){
     sanitize_filename(filename);
 
-    int character;
+    int index;
 
     //Read From Temp File
     FILE* traceFile;
@@ -57,9 +67,9 @@ void save_trace_file(char* filename){
     }
 
     // Read contents from file
-    while ((character = fgetc(temptraceFile)) != EOF)
+    while ((index = fgetc(temptraceFile)) != EOF)
     {
-        fputc(character, traceFile);
+        fputc(index, traceFile);
     }
 
     printf("Macro Saved to %s\n", traceFilename);
@@ -69,16 +79,17 @@ void save_trace_file(char* filename){
     return;
 }
 
-void save_event(uiohook_event * const event){
+void save_event(uiohook_event * const event, uint64_t initial_time){
     uint64_t time   = event->time;
     event_type type = event->type;
+    uint64_t real_time = time - initial_time;
 
     switch (type) {
         case EVENT_KEY_PRESSED:
         case EVENT_KEY_RELEASED:
         {
             uint16_t keycode = event->data.keyboard.keycode;
-            JsonObj* obj = json_from_keyboard_event(time, type, keycode);
+            JsonObj* obj = json_from_keyboard_event((int)real_time, type, (int)keycode);
             list_add(json_objects,obj);
             break;
         }
@@ -91,8 +102,7 @@ void save_event(uiohook_event * const event){
             int16_t  x = event->data.mouse.x;
             int16_t  y = event->data.mouse.y;
 
-            mouse_event_save(time, type, button, x, y);
-            JsonObj* obj = json_from_mouse_event(time, type, button, x, y);
+            JsonObj* obj = json_from_mouse_event((int)real_time, type, (int)button, (int)x, (int)y);
             list_add(json_objects,obj);
             break;
         }
@@ -102,7 +112,7 @@ void save_event(uiohook_event * const event){
             int16_t  rotation = event->data.wheel.rotation;
             uint8_t direction = event->data.wheel.direction;
 
-            JsonObj* obj = json_from_mouse_wheel_event(time, type, amount, rotation, direction);
+            JsonObj* obj = json_from_mouse_wheel_event((int)real_time, type, (int)amount, (int)rotation, (int)direction);
             list_add(json_objects,obj);
             break;
         }
