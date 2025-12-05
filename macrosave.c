@@ -32,10 +32,13 @@ void write_temp_trace_file(){
     char* buffer = json_to_string(jsonRoot);
     log_event("Buffer Initialized");
     fwrite(buffer,sizeof(char),strlen(buffer),temptraceFile);
+    log_event("Buffer Written");
     free(buffer);
+    log_event("Buffer Freed");
     fclose(temptraceFile);
+    log_event("Temp File Written");
     free_json(jsonRoot);
-    free_list(json_objects);
+    log_event("JSON Freed");
 }
 
 void sanitize_filename(char *str) {
@@ -47,16 +50,17 @@ void sanitize_filename(char *str) {
 }
 
 void save_trace_file(char* filename){
+    printf("Saving File: %s at tracefiles/%s.json",filename,filename);
     sanitize_filename(filename);
 
     int index;
 
     //Read From Temp File
     FILE* traceFile;
-    temptraceFile = fopen("temp/temp_trace.txt","r");
+    temptraceFile = fopen("temp/temp_trace.json","r");
 
     char traceFilename[strlen(filename)+20];
-    snprintf(traceFilename, sizeof(traceFilename), "tracefiles/%s.txt", filename);
+    snprintf(traceFilename, sizeof(traceFilename), "tracefiles/%s.json", filename);
 
     //Create Trace File
     traceFile = fopen(traceFilename, "w");

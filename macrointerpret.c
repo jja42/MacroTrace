@@ -175,7 +175,7 @@ JsonObj* json_from_keyboard_event(int time, event_type type, int keycode){
     }
 
     char* key = keycode_to_string(keycode);
-    JsonObj* keycodeObj = init_json_string(strdup("Key"),key);
+    JsonObj* keycodeObj = init_json_string(strdup("Key"),strdup(key));
     
     list_add(rootList,typeObj);
     list_add(rootList,keycodeObj);

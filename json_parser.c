@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include "macrolog.h"
 
 list_t* read_json_into_objects(char* filename){
     //read the file
@@ -616,6 +617,7 @@ int find_next_json(char* buffer, int index){
 void free_json(JsonObj* obj){
     //free our key which is a dynamically allocated string
     free(obj->key);
+    log_event("Freed Key");
     //if we are a json holder or an array we have multiple child objects
     //we must loop through our list and free recursively
     if(obj->type == JSON || obj->type == J_ARRAY){
@@ -631,11 +633,13 @@ void free_json(JsonObj* obj){
         switch (obj->type)
         {
         case J_STRING:
+            log_event("Freeing String");
             free(obj->value.s);
         default:
             break;
         }
     }
+    log_event("Freed Object");
     free(obj);
 }
 
