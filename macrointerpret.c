@@ -341,8 +341,8 @@ char* json_to_string(JsonObj* obj){
         //Allocate buffer
         size = 3; // {\n }
         if(obj->key != NULL){
-            //Quotes, colon and space
-            size += strlen(obj->key) + 4;
+            //Quotes, colon and space, newline
+            size += strlen(obj->key) + 5;
         }
         for (int i = 0; i < children->count; i++) {
             items[i] = json_to_string((JsonObj*)children->data[i]);
@@ -361,7 +361,7 @@ char* json_to_string(JsonObj* obj){
         if(obj->key != NULL){
             strcpy(buffer,"\"");
             strcat(buffer,obj->key);
-            strcat(buffer,"\": \n{");
+            strcat(buffer,"\": \n{\n");
         }
         else{
             strcpy(buffer, "{\n");
