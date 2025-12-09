@@ -11,6 +11,21 @@ DWORD timestamp() {
     return GetTickCount() - startTime;
 }
 
+char* vk_to_string(DWORD vkCode, DWORD scanCode, int isExtended) {
+    static char buffer[64];
+
+    // Build the LPARAM for GetKeyNameText
+    LPARAM lParam = (scanCode << 16) | (isExtended << 24);
+
+    int result = GetKeyNameTextA(lParam, buffer, sizeof(buffer));
+
+    if (result > 0)
+        return buffer;
+
+    return "Unknown";
+}
+
+
 // ----------------- KEYBOARD HOOK -----------------
 
 LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
@@ -26,9 +41,15 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
             case WM_SYSKEYUP:   eventType = "SYS_KEY_UP"; break;
         }
 
-        if (eventType)
-            printf("[%lu ms] %s: vk=%lu sc=%lu\n",
-                   timestamp(), eventType, kbd->vkCode, kbd->scanCode);
+        if (eventType) {
+            int isExtended = (kbd->flags & LLKHF_EXTENDED) != 0;
+
+            printf("[%lu ms] %s: %s\n",
+            timestamp(),
+            eventType,
+            vk_to_string(kbd->vkCode, kbd->scanCode, isExtended));
+        }
+
     }
     return CallNextHookEx(NULL, nCode, wParam, lParam);
 }
