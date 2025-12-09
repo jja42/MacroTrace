@@ -4,20 +4,31 @@
 #include <stdbool.h>
 #include "macrosave.h"
 #include "macrolog.h"
+#include <windows.h>
+#include <time.h>
+
+HHOOK keyboardHook;
+HHOOK mouseHook;
 
 int main(void) {
 
-    bool recording = false;
-
     printf("Press Any Keyboard Button to Begin Recording.\n");
 
-    hook_set_dispatch_proc(handle_event);
+    keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, NULL, 0);
+    mouseHook    = SetWindowsHookEx(WH_MOUSE_LL, MouseProc, NULL, 0);
 
-    //Start the hook
-    if (hook_run() != UIOHOOK_SUCCESS) {
-        fprintf(stderr, "Failed to start hook!\n");
-        return EXIT_FAILURE;
+    if (!keyboardHook || !mouseHook) {
+        printf("Failed to install hooks.\n");
+        return 1;
     }
+
+    //Standard Windows message loop
+    MSG msg;
+    while (GetMessage(&msg, NULL, 0, 0)) {}
+
+    UnhookWindowsHookEx(keyboardHook);
+    UnhookWindowsHookEx(mouseHook);
+
     write_temp_trace_file();
 
     printf("Recording Stopped.\n");

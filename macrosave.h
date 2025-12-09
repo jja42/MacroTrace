@@ -2,13 +2,15 @@
 #define MACROSAVE_H
 
 #include <stdio.h>
-#include <uiohook.h>
+#include <windows.h>
 
 void access_temp_trace_file();
 
 void write_temp_trace_file();
 
-void save_event(uiohook_event * const event, uint64_t initial_time);
+void save_mouse_event(MSLLHOOKSTRUCT* ms, WPARAM type, DWORD timeStamp);
+
+void save_keyboard_event(DWORD scanCode, int isExtended, WPARAM type, DWORD timeStamp);
 
 void save_trace_file(char* filename);
 

@@ -83,45 +83,20 @@ void save_trace_file(char* filename){
     return;
 }
 
-void save_event(uiohook_event * const event, uint64_t initial_time){
-    uint64_t time   = event->time;
-    event_type type = event->type;
-    uint64_t real_time = time - initial_time;
+void save_keyboard_event(DWORD scanCode, int isExtended, WPARAM type, DWORD timeStamp){
+    JsonObj* obj = json_from_keyboard_event(scanCode, isExtended, type, (int)timeStamp);    
+    list_add(json_objects,obj);
+}
 
-    switch (type) {
-        case EVENT_KEY_PRESSED:
-        case EVENT_KEY_RELEASED:
-        {
-            uint16_t keycode = event->data.keyboard.keycode;
-            JsonObj* obj = json_from_keyboard_event((int)real_time, type, (int)keycode);
-            list_add(json_objects,obj);
-            break;
-        }
-
-        case EVENT_MOUSE_PRESSED:
-        case EVENT_MOUSE_RELEASED:
-        case EVENT_MOUSE_MOVED:
-        {
-            uint16_t button = event->data.mouse.button;
-            int16_t  x = event->data.mouse.x;
-            int16_t  y = event->data.mouse.y;
-
-            JsonObj* obj = json_from_mouse_event((int)real_time, type, (int)button, (int)x, (int)y);
-            list_add(json_objects,obj);
-            break;
-        }
-
-        case EVENT_MOUSE_WHEEL: {
-            uint16_t amount = event->data.wheel.amount;
-            int16_t  rotation = event->data.wheel.rotation;
-            uint8_t direction = event->data.wheel.direction;
-
-            JsonObj* obj = json_from_mouse_wheel_event((int)real_time, type, (int)amount, (int)rotation, (int)direction);
-            list_add(json_objects,obj);
-            break;
-        }
-
-        default:
-            break;
+void save_mouse_event(MSLLHOOKSTRUCT* ms, WPARAM type, DWORD timeStamp){
+    if(type == WM_MOUSEWHEEL){
+        int delta = GET_WHEEL_DELTA_WPARAM(ms->mouseData);
+        JsonObj* obj = json_from_mouse_wheel_event(delta, (int)timeStamp);
+        list_add(json_objects,obj);
+    }
+    else{
+        WORD btn = HIWORD(ms->mouseData);
+        JsonObj* obj = json_from_mouse_event(type, btn, (int)ms->pt.x, (int)ms->pt.y, (int)timeStamp);    
+        list_add(json_objects,obj);
     }
 }

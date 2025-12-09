@@ -1,13 +1,14 @@
 #ifndef MACROTRACE_H
 #define MACROTRACE_H
 
-#include <uiohook.h>
+#include <windows.h>
 #include <stdbool.h>
 
-void handle_keyboard_event(uiohook_event * const event);
+DWORD timestamp();
 
-void handle_mouse_event(uiohook_event * const event);
+LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam);
 
-void handle_event(uiohook_event * const event);
+LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
 
+void check_exit(DWORD scanCode, WPARAM wParam);
 #endif

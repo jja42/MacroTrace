@@ -1,18 +1,18 @@
 #ifndef MACROINT_H
 #define MACROINT_H
 
-#include <uiohook.h>
+#include <windows.h>
 #include "json_parser.h"
 
-char* keycode_to_string(uint16_t keycode);
+char* scanCode_to_string(DWORD scanCode, int isExtended);
 
-char* button_to_mouse_input(uint16_t button);
+char* mouse_button_input_to_string(WPARAM input, WORD btn);
 
-JsonObj* json_from_keyboard_event(int time, event_type type, int keycode);
+JsonObj* json_from_keyboard_event(DWORD scanCode, int isExtended, WPARAM type, int time);
 
-JsonObj* json_from_mouse_event(int time, event_type type, int button, int  x, int  y);
+JsonObj* json_from_mouse_event(WPARAM type, DWORD button, int x, int y, int time);
 
-JsonObj* json_from_mouse_wheel_event(int time, event_type type, int amount, int  rotation, int  direction);
+JsonObj* json_from_mouse_wheel_event(int delta, int time);
 
 char* json_to_string(JsonObj* obj);
 
