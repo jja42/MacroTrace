@@ -90,17 +90,18 @@ void find_next(char* buffer, int* index, char c) {
 }
 
 list_t* parse_json(char* buffer, int* index) {
-    
     find_next(buffer, index, '{');
 
     list_t* objects = new_list(1);
 
     skip_whitespace(buffer, index);
+    
     while (buffer[*index] != '}') {
         //get key
         char* key = parse_string(buffer, index);
         log_event_fmt("Key Found: %s\n", key);
 
+        //find value
         find_next(buffer, index, ':');
         skip_whitespace(buffer,index);
 
@@ -129,6 +130,7 @@ list_t* parse_array(char* buffer, int* index) {
     skip_whitespace(buffer, index);
 
     while (buffer[*index] != ']') {
+        //get element type in array
         ObjType type = get_value_type(buffer,*index);
         JsonObj* object = init_json_from_buffer(type, NULL, buffer, index);
         
@@ -383,22 +385,20 @@ void print_json(list_t* json_objects){
 
             //print [ then print each object and then print ]
             case J_ARRAY:
-                list_t* array = (list_t*)object->value.ptr;
                 printf("%s : [\n", key);
-                print_json(array);
+                print_json(object->value.objects);
                 printf("]");
                 break;
 
             //print { then print each object and then print }
             case JSON:
-                list_t* json = (list_t*)object->value.ptr;
                 if(key != NULL){
                     printf("%s:\n{\n",key);
                 }
                 else{
                     printf("Json Obj:\n{\n");
                 }
-                print_json(json);
+                print_json(object->value.objects);
                 printf("}");
                 break;
         
@@ -454,7 +454,7 @@ list_t* json_list_get(list_t* json, char* key){
             //cast to JsonObj and check if key matches string
             JsonObj* object = (JsonObj*)json->data[j];
             if(strcmp(object->key, key) == 0){
-                return (list_t*)object->value.ptr;
+                return (list_t*)object->value.objects;
             }
         }
     }
