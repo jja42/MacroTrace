@@ -13,6 +13,9 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam);
 //Keyboard Input Hook Function
 LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
 
+//Keyboard Input Function just to detect Exit
+LRESULT CALLBACK AltKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
+
 //checks for exit case - Double Escape
 void check_exit(DWORD scanCode, WPARAM wParam);
 #endif

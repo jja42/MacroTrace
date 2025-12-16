@@ -74,6 +74,13 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
     return CallNextHookEx(NULL, nCode, wParam, lParam);
 }
 
+//Alt Callback for Keyboard Events
+LRESULT CALLBACK AltKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam){
+    KBDLLHOOKSTRUCT *kbd = (KBDLLHOOKSTRUCT*)lParam;
+
+    check_exit(kbd->scanCode, wParam);
+}
+
 //Callback for Mouse Events
 LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode == HC_ACTION && recording) {
