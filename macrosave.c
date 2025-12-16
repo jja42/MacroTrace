@@ -17,8 +17,6 @@ json_objects = new_list(1);
 
 //Create Trace File
 temptraceFile = fopen("temp/temp_trace.json", "w");
-
-init_logger();
 }
 
 void write_temp_trace_file(){

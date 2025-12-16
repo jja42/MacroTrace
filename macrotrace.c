@@ -3,6 +3,7 @@
 #include "macrointerpret.h"
 #include "macrotrace.h"
 #include "macrosave.h"
+#include "macrolog.h"
 
 DWORD startTime;
 bool recording = false;
@@ -41,6 +42,7 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
                 startTime = GetTickCount();
                 printf("Recording Started.\n");
                 access_temp_trace_file();
+                init_logger();
                 return CallNextHookEx(NULL, nCode, wParam, lParam);
             }
             return CallNextHookEx(NULL, nCode, wParam, lParam);

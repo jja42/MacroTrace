@@ -91,9 +91,6 @@ int get_json_end(char* buffer, int index);
 //print the json to stdout
 void print_json(list_t* json_objects);
 
-//Remove Leading and Trailing Whitespace in file
-void trim_whitespace(char *str);
-
 //look for nested json
 int find_next_json(char* buffer, int index);
 

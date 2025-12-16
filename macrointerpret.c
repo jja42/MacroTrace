@@ -12,6 +12,7 @@ char* scanCode_to_string(DWORD scanCode, int isExtended) {
     // Build the LPARAM for GetKeyNameText
     LPARAM lParam = (scanCode << 16) | (isExtended << 24);
 
+    //Convert LPARAM to Keyname
     int result = GetKeyNameTextA(lParam, buffer, sizeof(buffer));
 
     if (result > 0)
@@ -47,10 +48,14 @@ char* mouse_button_input_to_string(WPARAM input, WORD btn)
 }
 
 JsonObj* json_from_keyboard_event(DWORD scanCode, int isExtended, WPARAM type, int time){
+    //increment event count
     eventCount++;
+    //construct root list for json objects
     list_t* rootList = new_list(1);
+    //initialize object for event num and timestamp
     JsonObj* countObj = init_json_int(strdup("EventNum"), eventCount);
     JsonObj* timeObj = init_json_int(strdup("Timestamp"),time);
+    //declare object for event type
     JsonObj* typeObj;
 
     switch (type)
@@ -68,14 +73,17 @@ JsonObj* json_from_keyboard_event(DWORD scanCode, int isExtended, WPARAM type, i
         break;
     }
 
+    //Initialize object for Event Key
     char* key = scanCode_to_string(scanCode, isExtended);
     JsonObj* keycodeObj = init_json_string(strdup("Key"),strdup(key));
     
+    //populate root list
     list_add(rootList,countObj);
     list_add(rootList,typeObj);
     list_add(rootList,keycodeObj);
     list_add(rootList,timeObj);
 
+    //create a json object from list
     JsonObj* rootObt = init_json_object(NULL,rootList);
     log_event("Key Event JSON created");
 
@@ -83,11 +91,16 @@ JsonObj* json_from_keyboard_event(DWORD scanCode, int isExtended, WPARAM type, i
 }
 
 JsonObj* json_from_mouse_event(WPARAM type, DWORD button, int x, int y, int time){
+    //increment event count
     eventCount++;
+    //construct root list for json objects
     list_t* rootList = new_list(1);
+    //initialize object for event num and timestamp
     JsonObj* countObj = init_json_int(strdup("EventNum"), eventCount);
     JsonObj* timeObj = init_json_int(strdup("Timestamp"),time);
+    //declare object for event type
     JsonObj* typeObj;
+    //declare object for event
     JsonObj* eventObj;
 
     switch (type)
@@ -108,7 +121,9 @@ JsonObj* json_from_mouse_event(WPARAM type, DWORD button, int x, int y, int time
             break;
         case WM_MOUSEMOVE:
             typeObj = init_json_string(strdup("EventType"), strdup("Mouse Movement"));
+            //create list for X Y Position in Mouse Movement
             list_t* positionList = new_list(2);
+            //Initialize Json Ints and add to list
             JsonObj* xPos = init_json_int(strdup("X"),x);
             JsonObj* yPos = init_json_int(strdup("Y"),y);
             list_add(positionList, xPos);
@@ -117,11 +132,13 @@ JsonObj* json_from_mouse_event(WPARAM type, DWORD button, int x, int y, int time
             break;
     }
 
+    //populate root list
     list_add(rootList,countObj);
     list_add(rootList,typeObj);
     list_add(rootList,eventObj);
     list_add(rootList,timeObj);
 
+    //create a json object from list
     JsonObj* rootObt = init_json_object(NULL,rootList);
     log_event("Mouse Event JSON created");
 
@@ -129,16 +146,22 @@ JsonObj* json_from_mouse_event(WPARAM type, DWORD button, int x, int y, int time
 }   
 
 JsonObj* json_from_mouse_wheel_event(int delta, int time){
+    //increment event count
     eventCount++;
+    //construct root list for json objects
     list_t* rootList = new_list(1);
+    //initialize object for event num and timestamp
     JsonObj* countObj = init_json_int(strdup("EventNum"), eventCount);
     JsonObj* timeObj = init_json_int(strdup("Timestamp"),time);
-
+    //initialize object for event type
     JsonObj* typeObj = init_json_string(strdup("EventType"), strdup("Mouse Wheel Scroll"));
     
+    //create a list for wheel scroll data
     list_t* dataList = new_list(3);
+    //add scroll amount
     JsonObj* amountObj = init_json_int(strdup("Scroll Amount"), abs(delta));
     list_add(dataList,amountObj);
+    //get direction by checking delta
     if(delta > 0){
         JsonObj* directionObj = init_json_string(strdup("Direction"), strdup("Up"));
         list_add(dataList,directionObj);
@@ -148,13 +171,16 @@ JsonObj* json_from_mouse_wheel_event(int delta, int time){
         JsonObj* directionObj = init_json_string(strdup("Direction"), strdup("Down"));
         list_add(dataList,directionObj);
     }
+    //add data list to event object
     JsonObj* eventObj = init_json_object(strdup("Data"), dataList);
 
+     //populate root list
     list_add(rootList,countObj);
     list_add(rootList,typeObj);
     list_add(rootList,eventObj);
     list_add(rootList,timeObj);
 
+    //create a json object from list
     JsonObj* rootObt = init_json_object(NULL,rootList);
 
     log_event("Wheel Event JSON created");
@@ -165,19 +191,23 @@ JsonObj* json_from_mouse_wheel_event(int delta, int time){
 char* json_to_string(JsonObj* obj){
     char* buffer;
     int size;
+    //check json object type to convert
     switch (obj->type)
     {
     case J_INT:
+        //convert int to string
         char int_value[12]; 
         snprintf(int_value, sizeof(int_value), "%d", obj->value.num);
         //2 extra quotes + colon + space
         size = strlen(obj->key) + strlen(int_value) + 4;
+        //create buffer
         buffer = malloc(sizeof(char) * size + 1);
         if (buffer == NULL)
         {
             printf("Failed to allocate buffer");
             return NULL;
         }
+        //put format and conversion into buffer
         snprintf(buffer, size + 1, "\"%s\": %s", obj->key, int_value);
         log_event("Converted Int Value");
         break;
