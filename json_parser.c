@@ -69,9 +69,7 @@ list_t* read_buffer_into_objects(char* buffer){
         return NULL;
     }
 
-    list_t* json_objects = new_list(1);
-    list_add(json_objects, root);
-    return json_objects;
+    return root->value.objects;
 }
 
 void skip_whitespace(char* buffer, int* index) {
@@ -95,7 +93,7 @@ list_t* parse_json(char* buffer, int* index) {
     list_t* objects = new_list(1);
 
     skip_whitespace(buffer, index);
-    
+
     while (buffer[*index] != '}') {
         //get key
         char* key = parse_string(buffer, index);

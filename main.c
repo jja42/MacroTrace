@@ -6,7 +6,8 @@
 #include "macrolog.h"
 #include <windows.h>
 #include <time.h>
-#include<string.h>
+#include <string.h>
+#include "macroload.h"
 
 HHOOK keyboardHook;
 HHOOK mouseHook;
@@ -84,7 +85,9 @@ int main(void) {
         printf("Please Enter the Name of the Trace File You'd Like to Replay.\n\n");
         scanf("%s", filename);
 
-        //open filename
+        init_logger();
+
+        load_filename(filename);
         //parse        
         
         keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, AltKeyboardProc, NULL, 0);

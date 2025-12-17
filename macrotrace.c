@@ -79,6 +79,8 @@ LRESULT CALLBACK AltKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam){
     KBDLLHOOKSTRUCT *kbd = (KBDLLHOOKSTRUCT*)lParam;
 
     check_exit(kbd->scanCode, wParam);
+
+    return CallNextHookEx(NULL, nCode, wParam, lParam);
 }
 
 //Callback for Mouse Events
