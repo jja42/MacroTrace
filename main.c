@@ -15,7 +15,7 @@ HHOOK mouseHook;
 typedef enum {
 RECORD,
 REPLAY,
-NONE
+NO_MODE
 } MacroMode;
 
 MacroMode selectedMode;
@@ -30,14 +30,14 @@ int main(void) {
     printf("Enter 1 or Record for Recording Mode. Enter 2 or Replay for Replay Mode\n");
     printf("Use Ctrl + C at any time to Exit\n\n");
 
-    selectedMode = NONE;
+    selectedMode = NO_MODE;
     char mode[100];
     char filename[100];
 
-    while(selectedMode == NONE){
+    while(selectedMode == NO_MODE){
         scanf("%s", mode);
         selectedMode = parse_mode(mode);
-        if(selectedMode == NONE){
+        if(selectedMode == NO_MODE){
             printf("Invalid Mode Selection. Please select a valid Mode.\n");
         }
     }
@@ -118,5 +118,5 @@ MacroMode parse_mode(char* mode){
     if(strcmp(mode,"1") == 0 || strcmp(mode,"record") == 0){
         return RECORD;
     }
-    return NONE;
+    return NO_MODE;
 }

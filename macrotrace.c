@@ -6,6 +6,7 @@
 #include "macrolog.h"
 
 DWORD startTime;
+bool initialized = false;
 bool recording = false;
 bool end = false;
 
@@ -37,6 +38,13 @@ void check_exit(DWORD scanCode, WPARAM wParam){
 LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode == HC_ACTION) {
         if(!recording){
+            if(!initialized){
+                if(wParam == WM_SYSKEYDOWN || wParam == WM_KEYDOWN){
+                    initialized = true;
+                    return CallNextHookEx(NULL, nCode, wParam, lParam);
+                }
+                return CallNextHookEx(NULL, nCode, wParam, lParam);
+            }
             if(wParam == WM_SYSKEYUP || wParam == WM_KEYUP){
                 recording = true;
                 startTime = GetTickCount();
