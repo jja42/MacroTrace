@@ -4,6 +4,7 @@
 #include "macrotrace.h"
 #include "macrosave.h"
 #include "macrolog.h"
+#include "macroload.h"
 
 DWORD startTime;
 bool initialized = false;
@@ -16,8 +17,8 @@ DWORD timestamp() {
 }
 
 
-void check_exit(DWORD scanCode, WPARAM wParam){
-    if(scanCode == 1){
+void check_exit(WORD wvk, WPARAM wParam){
+    if(wvk == VK_ESCAPE){
         if(!end && wParam == WM_KEYUP){
             end = true;
             return;
@@ -57,7 +58,7 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
         }
         KBDLLHOOKSTRUCT *kbd = (KBDLLHOOKSTRUCT*)lParam;
 
-        check_exit(kbd->scanCode, wParam);
+        check_exit(kbd->vkCode, wParam);
 
         const char *eventType = NULL;
         DWORD timeStamp = timestamp();
@@ -86,7 +87,15 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
 LRESULT CALLBACK AltKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam){
     KBDLLHOOKSTRUCT *kbd = (KBDLLHOOKSTRUCT*)lParam;
 
-    check_exit(kbd->scanCode, wParam);
+    check_exit(kbd->vkCode, wParam);
+
+    //Consider Moving This Elsewhere
+    //Definitely Fix this to be wvk based
+    //Check for `
+    if(kbd->scanCode == 41 && wParam == WM_KEYUP){
+        //add a bool for still playing later
+        play_loaded_events();
+    }
 
     return CallNextHookEx(NULL, nCode, wParam, lParam);
 }

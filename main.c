@@ -89,19 +89,17 @@ int main(void) {
 
         init_logger();
 
-        load_filename(filename);
-        //parse        
+        load_filename(filename);        
         
-        keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, AltKeyboardProc, NULL, 0);
+        printf("\nFile: \"%s.json\" Was Successfully Opened and Loaded.\n Press the ` Button to Replay the File at any time.\n", filename);
+        printf("Press Escape Twice in a Row to End Replay.\n\n");
 
+        keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, AltKeyboardProc, NULL, 0);
+        
         if (!keyboardHook) {
             printf("Failed to access keyboard for input.\n");
             return 1;
         }
-
-        printf("\nFile: \"%s.json\" Was Successfully Opened and Loaded.\n Press the ` Button to Replay the File at any time.\n", filename);
-        printf("Press Escape Twice in a Row to End Replay.\n\n");
-
         //Standard Windows message loop
         MSG msg;
         while (GetMessage(&msg, NULL, 0, 0)) {}

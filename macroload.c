@@ -38,6 +38,10 @@ void load_file_events(list_t* file_json)
     }
 }
 
+void play_loaded_events(){
+    PlayEvents(events);
+}
+
 void trim_whitespace(char *str) {
     char *start = str;
     char *end;

@@ -19,4 +19,5 @@ void trim_whitespace(char *str);
 //if the user adds .json to a filename, this removes it
 void remove_json_extension(char *str);
 
+void play_loaded_events();
 #endif

@@ -6,7 +6,7 @@ KeyEvent ParseKeyboardEvent(list_t* eventData){
 
     JsonObj* keyInputObject = json_obj_get(eventData,"Key");
 
-    ke.key = keyInputObject->value.s;
+    ke.key = _strdup(keyInputObject->value.s);
 
     JsonObj* eventTypeObject = json_obj_get(eventData,"EventType");
 
@@ -31,6 +31,8 @@ MouseEvent ParseMouseEvent(list_t* eventData){
 
     if (strcmp(eventTypeString, "Mouse Button Press") == 0) me.release = false;
     if (strcmp(eventTypeString, "Mouse Button Release") == 0) me.release = true;
+
+    return me;
 }
 
 MouseEvent ParseMouseMoveEvent(list_t* eventData){
@@ -77,27 +79,33 @@ EventType ParseEventType(char* eventTypeString){
 DWORD ParseMouseButton(char* mouseButtonString, bool release){
     if (strcmp(mouseButtonString, "Left Click") == 0){
         if(release){
-            return MOUSEEVENTF_LEFTDOWN;
+            return MOUSEEVENTF_LEFTUP;
         }
-        return MOUSEEVENTF_LEFTUP;
+        return MOUSEEVENTF_LEFTDOWN;
     }
     if (strcmp(mouseButtonString, "Right Click") == 0){
         if(release){
-            return WM_RBUTTONUP;
+            return MOUSEEVENTF_RIGHTUP;
         }
-        return WM_RBUTTONDOWN;
+        return MOUSEEVENTF_RIGHTDOWN;
     }
     if (strcmp(mouseButtonString, "Scroll Wheel Click") == 0){
         if(release){
-            return WM_MBUTTONUP;
+            return MOUSEEVENTF_MIDDLEUP;
         }
-        return WM_MBUTTONDOWN;
+        return MOUSEEVENTF_MIDDLEDOWN;
     }
     if (strcmp(mouseButtonString, "Extra Mouse Button 1 Click") == 0){
         if(release){
-            return WM_XBUTTONUP;
+            return MOUSEEVENTF_XUP;
         }
-        return WM_XBUTTONDOWN;
+        return MOUSEEVENTF_XDOWN;
+    }
+    if (strcmp(mouseButtonString, "Extra Mouse Button 2 Click") == 0){
+        if(release){
+            return MOUSEEVENTF_XUP;
+        }
+        return MOUSEEVENTF_XDOWN;
     }
 
     return 0;
@@ -112,15 +120,15 @@ WORD KeyNameToVK(char* key)
     if (strcmp(key, "Tab") == 0) return VK_TAB;
     if (strcmp(key, "Caps Lock") == 0) return VK_CAPITAL;
     if (strcmp(key, "Space") == 0) return VK_SPACE;
-    if (strcmp(key, "Shift") == 0) return VK_SHIFT;
-    if (strcmp(key, "Right Shift") == 0) return VK_SHIFT;
-    if (strcmp(key, "Ctrl") == 0) return VK_CONTROL;
-    if (strcmp(key, "Right Ctrl") == 0) return VK_CONTROL;
+    if (strcmp(key, "Shift") == 0) return VK_LSHIFT;
+    if (strcmp(key, "Right Shift") == 0) return VK_RSHIFT;
+    if (strcmp(key, "Ctrl") == 0) return VK_LCONTROL;
+    if (strcmp(key, "Right Ctrl") == 0) return VK_RCONTROL;
     if (strcmp(key, "Left Windows") == 0) return VK_LWIN;
     if (strcmp(key, "Right Windows") == 0) return VK_RWIN;
     if (strcmp(key, "Application") == 0) return VK_APPS;
-    if (strcmp(key, "Alt") == 0) return VK_MENU;
-    if (strcmp(key, "Right Alt") == 0) return VK_MENU;
+    if (strcmp(key, "Alt") == 0) return VK_LMENU;
+    if (strcmp(key, "Right Alt") == 0) return VK_RMENU;
     if (strcmp(key, "F1") == 0) return VK_F1;
     if (strcmp(key, "F2") == 0) return VK_F2;
     if (strcmp(key, "F3") == 0) return VK_F3;
@@ -180,8 +188,6 @@ WORD KeyNameToVK(char* key)
 
 int InputEventToSendInput(InputEvent* event, INPUT* inputs)
 {
-    ZeroMemory(inputs, sizeof(INPUT));
-
     switch (event->type)
     {
         case KEY_INPUT_EVENT:
@@ -190,10 +196,11 @@ int InputEventToSendInput(InputEvent* event, INPUT* inputs)
             if (!vk) return 0;
 
             inputs[0].type = INPUT_KEYBOARD;
-            inputs[0].ki.wVk = vk;
+            inputs[0].ki.wScan = MapVirtualKey(vk, MAPVK_VK_TO_VSC);
+            inputs[0].ki.dwFlags = KEYEVENTF_SCANCODE;
 
             if (event->data.ke.release)
-                inputs[0].ki.dwFlags = KEYEVENTF_KEYUP;
+                inputs[0].ki.dwFlags |= KEYEVENTF_KEYUP;
 
             return 1;
         }
@@ -202,8 +209,12 @@ int InputEventToSendInput(InputEvent* event, INPUT* inputs)
         {
             inputs[0].type = INPUT_MOUSE;
             inputs[0].mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-            inputs[0].mi.dx = event->data.me.x;
-            inputs[0].mi.dy = event->data.me.y;
+            int screenW = GetSystemMetrics(SM_CXSCREEN) - 1;
+            int screenH = GetSystemMetrics(SM_CYSCREEN) - 1;
+
+            inputs[0].mi.dx = (event->data.me.x * 65535) / screenW;
+            inputs[0].mi.dy = (event->data.me.y * 65535) / screenH;
+
             return 1;
         }
 
@@ -250,6 +261,7 @@ InputEvent* json_to_input_event(JsonObj* event_json){
             break;
         case MOUSE_WHEEL_EVENT:
             event->data.we = ParseWheelEvent(eventData);
+            break;
         default:
             break;
     }
@@ -268,20 +280,27 @@ void PlayEvents(list_t* events)
 {
     int lastTime = 0;
 
+    printf("Playing Events\n");
+
     for (int i = 0; i < events->count; i++)
     {
-        InputEvent* event = (InputEvent*)events->data;
+        InputEvent* event = (InputEvent*)events->data[i];
         int delay = event->timestamp - lastTime;
         if (delay > 0)
+        {
+            printf("Delay: %d\n",delay);
             Sleep(delay);
+        }
 
-        INPUT inputs[2];
+        INPUT inputs[1] = {0};
         int n = InputEventToSendInput(event, inputs);
         if (n > 0)
             SendInput(n, inputs, sizeof(INPUT));
 
         lastTime = event->timestamp;
     }
+
+    printf("Finished Playing Events\n");
 }
 
 

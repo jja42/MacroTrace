@@ -17,5 +17,5 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK AltKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
 
 //checks for exit case - Double Escape
-void check_exit(DWORD scanCode, WPARAM wParam);
+void check_exit(WORD wvk, WPARAM wParam);
 #endif
