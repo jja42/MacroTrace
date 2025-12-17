@@ -2,10 +2,13 @@
 #define MACROINT_H
 
 #include <windows.h>
-#include "json_parser.h"
+#include "json_parser.h"\
 
-//covert scanCode to string representation of key input
+//convert ScanCode to string representation of key input
 char* scanCode_to_string(DWORD scanCode, int isExtended);
+
+//convert string representation to ScanCode
+DWORD string_to_scanCode(char* key);
 
 //get button pressed from input and return it
 char* mouse_button_input_to_string(WPARAM input, WORD btn);

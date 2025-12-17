@@ -48,7 +48,7 @@ void sanitize_filename(char *str) {
 }
 
 void save_trace_file(char* filename){
-    printf("Saving File: %s at tracefiles/%s.json",filename,filename);
+    printf("Saving File: %s at tracefiles/%s.json\n",filename,filename);
     sanitize_filename(filename);
 
     int index;

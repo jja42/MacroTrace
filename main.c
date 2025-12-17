@@ -75,8 +75,10 @@ int main(void) {
         save_trace_file(filename);
 
         //Leave the window open after save for clarity
-        printf("\nFile: \"%s.json\" Was Successfully Saved in the Trace Files Folder.\n Press any button to Exit.\n", filename);
+        printf("Press Ctrl + C to Exit or Close Window.\n");
         scanf("%s", filename);
+
+        exit(0);
     }
 
     if(selectedMode == REPLAY)

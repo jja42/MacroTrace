@@ -10,7 +10,7 @@ char* scanCode_to_string(DWORD scanCode, int isExtended) {
     static char buffer[64];
 
     // Build the LPARAM for GetKeyNameText
-    LPARAM lParam = (scanCode << 16) | (isExtended << 24);
+    LPARAM lParam = (scanCode << 16) | (isExtended << 24) | 1;
 
     //Convert LPARAM to Keyname
     int result = GetKeyNameTextA(lParam, buffer, sizeof(buffer));
@@ -20,7 +20,6 @@ char* scanCode_to_string(DWORD scanCode, int isExtended) {
 
     return "Unknown Key";
 }
-
 
 char* mouse_button_input_to_string(WPARAM input, WORD btn)
 {
@@ -75,12 +74,12 @@ JsonObj* json_from_keyboard_event(DWORD scanCode, int isExtended, WPARAM type, i
 
     //Initialize object for Event Key
     char* key = scanCode_to_string(scanCode, isExtended);
-    JsonObj* keycodeObj = init_json_string(strdup("Key"),strdup(key));
+    JsonObj* keyCodeObj = init_json_string(strdup("Key"),strdup(key));
     
     //populate root list
     list_add(rootList,countObj);
     list_add(rootList,typeObj);
-    list_add(rootList,keycodeObj);
+    list_add(rootList,keyCodeObj);
     list_add(rootList,timeObj);
 
     //create a json object from list
@@ -110,14 +109,14 @@ JsonObj* json_from_mouse_event(WPARAM type, DWORD button, int x, int y, int time
         case WM_MBUTTONDOWN:
         case WM_XBUTTONDOWN:
             typeObj = init_json_string(strdup("EventType"), strdup("Mouse Button Press"));
-            eventObj = init_json_string(strdup("Button"), strdup(mouse_button_input_to_string(button,button)));
+            eventObj = init_json_string(strdup("Button"), strdup(mouse_button_input_to_string(type,button)));
             break;
         case WM_LBUTTONUP:
         case WM_RBUTTONUP:
         case WM_MBUTTONUP:
         case WM_XBUTTONUP:
             typeObj = init_json_string(strdup("EventType"), strdup("Mouse Button Release"));
-            eventObj = init_json_string(strdup("Button"), strdup(mouse_button_input_to_string(button,button)));
+            eventObj = init_json_string(strdup("Button"), strdup(mouse_button_input_to_string(type,button)));
             break;
         case WM_MOUSEMOVE:
             typeObj = init_json_string(strdup("EventType"), strdup("Mouse Movement"));

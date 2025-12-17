@@ -2,6 +2,7 @@
 #include "json_parser.h"
 #include <string.h>
 #include <ctype.h>
+#include "macroevent.h"
 
 list_t* events;
 
@@ -26,7 +27,9 @@ void load_filename(char* filename){
 
 void load_file_events(list_t* file_json){
     for(int i = 0; i<file_json->count;i++){
-
+        JsonObj* obj = (JsonObj*)file_json[i].data;
+        InputEvent* event = json_to_input_event(obj);
+        list_add(events,event);
     }
 }
 
