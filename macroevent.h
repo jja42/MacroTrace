@@ -5,11 +5,10 @@
 #include "json_parser.h"
 
 typedef enum {
-MOUSE_CLICK,
-MOUSE_MOVE,
-KEY_PRESS,
-KEY_RELEASE,
-MOUSE_WHEEL
+MOUSE_INPUT_EVENT,
+MOUSE_MOVE_EVENT,
+KEY_INPUT_EVENT,
+MOUSE_WHEEL_EVENT
 } EventType;
 
 typedef struct {
@@ -20,9 +19,8 @@ bool release;
 typedef struct {
 int x;
 int y;
-int button;
+char* button;
 bool release;
-bool click;
 } MouseEvent;
 
 typedef struct {
@@ -41,7 +39,7 @@ union {
 } InputEvent;
 
 
-InputEvent* json_to_input_event(JsonObj* object);
+InputEvent* json_to_input_event(JsonObj* event_json);
 
 int InputEventToSendInput(InputEvent* ev, INPUT* inputs);
 
@@ -49,4 +47,13 @@ WORD KeyNameToVK(char* key);
 
 void PlayEvents(list_t* events);
 
+EventType ParseEventType(char* eventTypeString);
+
+KeyEvent ParseKeyboardEvent(list_t* eventData);
+
+MouseEvent ParseMouseMoveEvent(list_t* eventData);
+
+MouseEvent ParseMouseEvent(list_t* eventData);
+
+WheelEvent ParseWheelEvent(list_t* eventData);
 #endif

@@ -33,14 +33,14 @@ char* mouse_button_input_to_string(WPARAM input, WORD btn)
             return "Right Click";
         case WM_MBUTTONDOWN:
         case WM_MBUTTONUP:
-            return "Scroll Wheel Click  ";
+            return "Scroll Wheel Click";
         case WM_XBUTTONDOWN:
         case WM_XBUTTONUP:
             if (btn == XBUTTON1) {
-                return "Extra Mouse Button 1";
+                return "Extra Mouse Button 1 Click";
             }
             else{
-                return "Extra Mouse Button 2";
+                return "Extra Mouse Button 2 Click";
             }
         default: return "Unknown Button";
     }

@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "macroevent.h"
+#include "macrolog.h"
 
 list_t* events;
 
@@ -20,16 +21,20 @@ void load_filename(char* filename){
     char filepath[150]; 
     sprintf(filepath,"tracefiles/%s.json", filename);
 
-    list_t* file_json = read_json_into_objects(filepath);
+    list_t* file_json = read_json_into_objects(filepath); //Objects in Root Json
 
     load_file_events(file_json);
 }
 
-void load_file_events(list_t* file_json){
-    for(int i = 0; i<file_json->count;i++){
-        JsonObj* obj = (JsonObj*)file_json[i].data;
-        InputEvent* event = json_to_input_event(obj);
-        list_add(events,event);
+void load_file_events(list_t* file_json)
+{
+    events = new_list(1);
+    list_t* event_array = json_list_get(file_json,"Events");//Get Event Array
+    for(int i = 0; i<event_array->count;i++){
+         JsonObj* json_event = (JsonObj*)event_array->data[i]; //JSON in Array
+         InputEvent* event = json_to_input_event(json_event);
+         list_add(events,event);
+         log_event_fmt("Event Num: %d Added To List",i+1);
     }
 }
 

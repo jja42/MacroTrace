@@ -97,7 +97,6 @@ list_t* parse_json(char* buffer, int* index) {
     while (buffer[*index] != '}') {
         //get key
         char* key = parse_string(buffer, index);
-        log_event_fmt("Key Found: %s\n", key);
 
         //find value
         find_next(buffer, index, ':');
@@ -172,19 +171,14 @@ JsonObj* init_json_from_buffer(ObjType type, char* key, char* buffer, int* index
     switch (type)
     {
     case J_ARRAY:
-        log_event("Initializing J_ARRAY\n");
         return init_json_array(key, parse_array(buffer, index));
     case JSON:
-        log_event("Initializing JSON\n");
         return init_json_object(key, parse_json(buffer,index));
     case J_INT:
-        log_event("Initializing J_INT\n");
         return init_json_int(key, parse_int(buffer, index));
     case J_BOOL:
-        log_event("Initializing J_BOOL\n");
         return init_json_bool(key,parse_bool(buffer, index));
     case J_STRING:
-        log_event("Initializing J_STRING\n");
         return init_json_string(key,parse_string(buffer,index));
     default:
         break;
@@ -368,22 +362,22 @@ void print_json(list_t* json_objects){
             {
             case J_STRING:
                 char* value = object->value.s;
-                printf("%s : %s", key, value);
+                printf("%s: %s", key, value);
                 break;
 
             case J_INT:
                 int val = object->value.num;
-                printf("%s : %d", key, val);
+                printf("%s: %d", key, val);
                 break;
 
             case J_BOOL:
                 bool b = object->value.boolean;
-                printf("%s : %d", key, b);
+                printf("%s: %d", key, b);
                 break;
 
             //print [ then print each object and then print ]
             case J_ARRAY:
-                printf("%s : [\n", key);
+                printf("%s: [\n", key);
                 print_json(object->value.objects);
                 printf("]");
                 break;
@@ -418,7 +412,6 @@ void print_json(list_t* json_objects){
 void free_json(JsonObj* obj){
     //free our key which is a dynamically allocated string
     free(obj->key);
-    log_event("Freed Key");
     //if we are a json holder or an array we have multiple child objects
     //we must loop through our list and free recursively
     if(obj->type == JSON || obj->type == J_ARRAY){
@@ -434,20 +427,18 @@ void free_json(JsonObj* obj){
         switch (obj->type)
         {
         case J_STRING:
-            log_event("Freeing String");
             free(obj->value.s);
         default:
             break;
         }
     }
-    log_event("Freed Object");
     free(obj);
 }
 
 
 list_t* json_list_get(list_t* json, char* key){
     //go through the list provided
-    for(int j = 0; j <json->capacity; j++){
+    for(int j = 0; j <json->count; j++){
         if(json->data[j] != NULL){
             //cast to JsonObj and check if key matches string
             JsonObj* object = (JsonObj*)json->data[j];
@@ -456,12 +447,13 @@ list_t* json_list_get(list_t* json, char* key){
             }
         }
     }
+    printf("Could Not Find JSON or J_ARRAY Named: %s in List\n", key);
     return NULL;
 }
 
 JsonObj* json_obj_get(list_t* json_objects, char* key){
     //go through the list provided
-    for(int j = 0; j <json_objects->capacity; j++){
+    for(int j = 0; j <json_objects->count; j++){
         if(json_objects->data[j] != NULL){
             //cast to JsonObj and check if key matches string
             JsonObj* object = (JsonObj*)json_objects->data[j];
