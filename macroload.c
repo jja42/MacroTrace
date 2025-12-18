@@ -4,8 +4,13 @@
 #include <ctype.h>
 #include "macroevent.h"
 #include "macrolog.h"
+#include "macroutil.h"
 
 list_t* events;
+
+bool endReplay = false;
+bool replaying = false;
+bool play = false;
 
 char* parse_filename(char* filename){
     trim_whitespace(filename);
@@ -69,4 +74,20 @@ void remove_json_extension(char *str) {
     if (len >= 5 && strcmp(str + len - 5, ".json") == 0) {
         str[len - 5] = '\0';
     }
+}
+
+LRESULT CALLBACK ReplayKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam){
+    KBDLLHOOKSTRUCT *kbd = (KBDLLHOOKSTRUCT*)lParam;
+
+    if(check_double_press(&endReplay,kbd->vkCode,wParam,VK_ESCAPE)){
+            PostQuitMessage(0);
+    }
+
+    if(check_double_press(&play,kbd->vkCode,wParam,VK_CAPITAL)){
+        replaying = true;
+        play_loaded_events();
+        replaying = false;
+    }
+    
+    return CallNextHookEx(NULL, nCode, wParam, lParam);
 }

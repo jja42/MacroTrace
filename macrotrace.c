@@ -4,36 +4,17 @@
 #include "macrotrace.h"
 #include "macrosave.h"
 #include "macrolog.h"
-#include "macroload.h"
+#include "macroutil.h"
 
 DWORD startTime;
 bool initialized = false;
 bool recording = false;
-bool end = false;
+bool endTrace = false;
 
 //Get relative timestamp
 DWORD timestamp() {
     return GetTickCount() - startTime;
 }
-
-
-void check_exit(DWORD wvk, WPARAM wParam){
-    if(wvk == VK_ESCAPE){
-        if(!end && wParam == WM_KEYUP){
-            end = true;
-            return;
-        }
-        else{
-            if(end && wParam == WM_KEYDOWN){
-                PostQuitMessage(0);
-            }
-        }
-    }
-    else{
-        end = false;
-    }
-}
-
 
 //Callback for Keyboard Events
 LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
@@ -58,7 +39,9 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
         }
         KBDLLHOOKSTRUCT *kbd = (KBDLLHOOKSTRUCT*)lParam;
 
-        check_exit(kbd->vkCode, wParam);
+        if(check_double_press(&endTrace,kbd->vkCode,wParam,VK_ESCAPE)){
+            PostQuitMessage(0);
+        }
 
         const char *eventType = NULL;
         DWORD timeStamp = timestamp();
@@ -80,23 +63,6 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
             save_keyboard_event(kbd->scanCode, isExtended, wParam, timeStamp);
         }
     }
-    return CallNextHookEx(NULL, nCode, wParam, lParam);
-}
-
-//Alt Callback for Keyboard Events
-LRESULT CALLBACK AltKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam){
-    KBDLLHOOKSTRUCT *kbd = (KBDLLHOOKSTRUCT*)lParam;
-
-    check_exit(kbd->vkCode, wParam);
-
-    //Consider Moving This Elsewhere
-    //Definitely Fix this to be wvk based
-    //Check for `, consider something else (maps to OEM3 which is awkward)
-    if(kbd->scanCode == 41 && wParam == WM_KEYUP){
-        //add a bool for still playing later
-        play_loaded_events();
-    }
-
     return CallNextHookEx(NULL, nCode, wParam, lParam);
 }
 

@@ -91,10 +91,10 @@ int main(void) {
 
         load_filename(filename);        
         
-        printf("\nFile: \"%s.json\" Was Successfully Opened and Loaded.\n Press the ` Button to Replay the File at any time.\n", filename);
+        printf("\nFile: \"%s.json\" Was Successfully Opened and Loaded.\nPress the Caps Lock Key Twice to Replay the File at any time.\n", filename);
         printf("Press Escape Twice in a Row to End Replay.\n\n");
 
-        keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, AltKeyboardProc, NULL, 0);
+        keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, ReplayKeyboardProc, NULL, 0);
         
         if (!keyboardHook) {
             printf("Failed to access keyboard for input.\n");

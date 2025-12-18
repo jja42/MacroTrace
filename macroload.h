@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "list.h"
+#include <windows.h>
 
 //takes a filename and sanitizes it for file opening
 char* parse_filename(char* filename);
@@ -22,4 +23,7 @@ void remove_json_extension(char *str);
 void play_loaded_events();
 
 void free_loaded_events();
+
+//Callback for Keyboard Events For Replay
+LRESULT CALLBACK ReplayKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
 #endif
