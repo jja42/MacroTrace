@@ -270,7 +270,7 @@ InputEvent* json_to_input_event(JsonObj* event_json){
     event->timestamp = timestampObject->value.num;
 
     log_event("Event Parsed");
-    
+
     return event;
 }
 
@@ -278,18 +278,26 @@ InputEvent* json_to_input_event(JsonObj* event_json){
 
 void PlayEvents(list_t* events)
 {
-    int lastTime = 0;
-
     printf("Playing Events\n");
+    
+    LARGE_INTEGER freq;
+    QueryPerformanceFrequency(&freq);
+
+    LARGE_INTEGER start, now;
+    QueryPerformanceCounter(&start);
+
+    int lastTime = 0;
 
     for (int i = 0; i < events->count; i++)
     {
         InputEvent* event = (InputEvent*)events->data[i];
         int delay = event->timestamp - lastTime;
+
         if (delay > 0)
         {
-            printf("Delay: %d\n",delay);
-            Sleep(delay);
+            do {
+                QueryPerformanceCounter(&now);
+            } while (((now.QuadPart - start.QuadPart) * 1000 / freq.QuadPart) < event->timestamp);
         }
 
         INPUT inputs[1] = {0};
@@ -299,7 +307,6 @@ void PlayEvents(list_t* events)
 
         lastTime = event->timestamp;
     }
-
     printf("Finished Playing Events\n");
 }
 
