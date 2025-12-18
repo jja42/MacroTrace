@@ -200,7 +200,7 @@ char* json_to_string(JsonObj* obj){
         //2 extra quotes + colon + space
         size = strlen(obj->key) + strlen(int_value) + 4;
         //create buffer
-        buffer = malloc(sizeof(char) * size + 1);
+        buffer = malloc(sizeof(char) * (size + 1));
         if (buffer == NULL)
         {
             printf("Failed to allocate buffer");
@@ -214,7 +214,7 @@ char* json_to_string(JsonObj* obj){
         const char* bool_value = obj->value.boolean ? "true" : "false";
         //2 extra quotes + colon + space
         size = strlen(obj->key) + strlen(bool_value) + 4;
-        buffer = malloc(sizeof(char) * size + 1);
+        buffer = malloc(sizeof(char) * (size + 1));
         if (buffer == NULL)
         {
             printf("Failed to allocate buffer");
@@ -226,7 +226,7 @@ char* json_to_string(JsonObj* obj){
     case J_STRING:
         //4 extra quotes + colon + space
         size = strlen(obj->key) + strlen(obj->value.s) + 6;
-        buffer = malloc(sizeof(char) * size + 1);
+        buffer = malloc(sizeof(char) * (size + 1));
         if (buffer == NULL)
         {
             printf("Failed to allocate buffer");

@@ -114,6 +114,14 @@ DWORD ParseMouseButton(char* mouseButtonString, bool release){
 WORD KeyNameToVK(char* key)
 {
     if (!key) return 0;
+    
+    // Single character (A–Z, 0–9, etc.)
+    if (strlen(key) == 1)
+    {
+        SHORT vk = VkKeyScanA(key[0]);
+        if (vk != -1)
+            return LOBYTE(vk);
+    }
 
     if (strcmp(key, "Esc") == 0) return VK_ESCAPE;
     if (strcmp(key, "Enter") == 0) return VK_RETURN;
@@ -173,15 +181,6 @@ WORD KeyNameToVK(char* key)
     if (strcmp(key, "Right") == 0) return VK_RIGHT;
     if (strcmp(key, "Down") == 0) return VK_DOWN;
     if (strcmp(key, "Clear") == 0) return VK_CLEAR;
-
-
-    // Single character (A–Z, 0–9, etc.)
-    if (strlen(key) == 1)
-    {
-        SHORT vk = VkKeyScanA(key[0]);
-        if (vk != -1)
-            return LOBYTE(vk);
-    }
 
     return 0;
 }

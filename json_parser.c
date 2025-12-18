@@ -258,7 +258,7 @@ char* parse_string(char* buffer, int* index){
         int index = -1;
         contains_newline = false;
         for (int i = 0; i < length; i++) {
-            if (string[index] == '\\' && string[i+1] == 'n') {
+            if (string[i] == '\\' && string[i+1] == 'n') {
                 contains_newline = true;
                 index = i;
                 break;
@@ -295,7 +295,7 @@ int parse_int(char* buffer, int* index){
     int length = end_index - *index;
 
     //allocate a string
-    char* str = malloc(sizeof(char) * length + 1);
+    char* str = malloc(sizeof(char) * (length + 1));
 
     if (str == NULL) {
         printf("Failed to allocate for int conversion.\n");

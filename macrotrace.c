@@ -91,7 +91,7 @@ LRESULT CALLBACK AltKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam){
 
     //Consider Moving This Elsewhere
     //Definitely Fix this to be wvk based
-    //Check for `
+    //Check for `, consider something else (maps to OEM3 which is awkward)
     if(kbd->scanCode == 41 && wParam == WM_KEYUP){
         //add a bool for still playing later
         play_loaded_events();
