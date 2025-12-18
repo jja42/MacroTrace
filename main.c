@@ -63,9 +63,9 @@ int main(void) {
         UnhookWindowsHookEx(keyboardHook);
         UnhookWindowsHookEx(mouseHook);
 
-        write_temp_trace_file();
-
         printf("Recording Stopped.\n");
+
+        write_temp_trace_file();
         log_event("Done Recording");
 
         

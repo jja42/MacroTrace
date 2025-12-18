@@ -17,7 +17,7 @@ DWORD timestamp() {
 }
 
 
-void check_exit(WORD wvk, WPARAM wParam){
+void check_exit(DWORD wvk, WPARAM wParam){
     if(wvk == VK_ESCAPE){
         if(!end && wParam == WM_KEYUP){
             end = true;
