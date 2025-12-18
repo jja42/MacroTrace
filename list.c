@@ -120,3 +120,18 @@ list_t* list_join(list_t* list1, list_t* list2){
 
   return new_l;
 }
+
+list_t* copy_list(list_t* source, int size){
+  list_t* new = new_list(size);
+
+  for(int i = 0; i<source->count;i++){
+    if((i+1) > size){
+      break;
+    }
+    else{
+      list_add(new,source->data[i]);
+    }
+  }
+
+  return new;
+}

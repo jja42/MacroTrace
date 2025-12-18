@@ -105,6 +105,8 @@ int main(void) {
         while (GetMessage(&msg, NULL, 0, 0)) {}
 
         UnhookWindowsHookEx(keyboardHook);
+
+        free_loaded_events();
     }
 
     return EXIT_SUCCESS;

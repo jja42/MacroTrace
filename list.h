@@ -28,4 +28,7 @@ void resize_list(list_t* list);
 //add two lists together
 list_t* list_join(list_t* list1, list_t* list2);
 
+//copy values from source list into a new list up to size
+list_t* copy_list(list_t* source, int size);
+
 #endif

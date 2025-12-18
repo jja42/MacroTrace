@@ -20,8 +20,11 @@ temptraceFile = fopen("temp/temp_trace.json", "w");
 }
 
 void write_temp_trace_file(){
-    log_event_fmt("Json Objects Length: %d", json_objects->count);
-    JsonObj* mainObj = init_json_array(strdup("Events"),json_objects);
+    //Remove Last Three Events (Double Escape to Exit)
+    list_t* trimmed_objects = copy_list(json_objects,json_objects->count-3);
+
+    log_event_fmt("Json Objects Length: %d", trimmed_objects->count);
+    JsonObj* mainObj = init_json_array(strdup("Events"),trimmed_objects);
     list_t* json = new_list(1);
     list_add(json,mainObj);
     log_event("Main Json Initialized");
@@ -37,6 +40,11 @@ void write_temp_trace_file(){
     log_event("Temp File Written");
     free_json(jsonRoot);
     log_event("JSON Freed");
+
+    free_json(mainObj);
+    free_list(json_objects);
+    free_list(trimmed_objects);
+    free_list(json);
 }
 
 void sanitize_filename(char *str) {

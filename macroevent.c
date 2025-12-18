@@ -270,7 +270,7 @@ InputEvent* json_to_input_event(JsonObj* event_json){
     event->timestamp = timestampObject->value.num;
 
     log_event("Event Parsed");
-
+    
     return event;
 }
 

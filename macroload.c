@@ -23,7 +23,9 @@ void load_filename(char* filename){
 
     list_t* file_json = read_json_into_objects(filepath); //Objects in Root Json
 
-    load_file_events(file_json);
+    load_file_events(file_json);    
+    
+    free_list(file_json);
 }
 
 void load_file_events(list_t* file_json)
@@ -40,6 +42,10 @@ void load_file_events(list_t* file_json)
 
 void play_loaded_events(){
     PlayEvents(events);
+}
+
+void free_loaded_events(){
+    free_list(events);
 }
 
 void trim_whitespace(char *str) {

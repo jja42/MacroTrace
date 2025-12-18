@@ -20,4 +20,6 @@ void trim_whitespace(char *str);
 void remove_json_extension(char *str);
 
 void play_loaded_events();
+
+void free_loaded_events();
 #endif
