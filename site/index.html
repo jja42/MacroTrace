@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Macro Library</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #111;
+      color: #eee;
+    }
+
+    h1 {
+      margin-bottom: 0.2em;
+    }
+
+    p {
+      color: #aaa;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    a {
+      color: #6cf;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Macro Library</h1>
+  <p>Download and share input macros.</p>
+
+  <ul id="macro-list">
+    <li>Loading…</li>
+  </ul>
+
+  <div class="footer">
+    Hosted on GitHub Pages
+  </div>
+
+  <script>
+    fetch("macros/index.json")
+      .then(r => {
+        if (!r.ok) throw new Error("Failed to load index.json");
+        return r.json();
+      })
+      .then(macros => {
+        const list = document.getElementById("macro-list");
+        list.innerHTML = "";
+
+        if (macros.length === 0) {
+          list.innerHTML = "<li>No macros yet.</li>";
+          return;
+        }
+
+        macros.forEach(m => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = "macros/" + m.file;
+          a.textContent = m.name;
+          li.appendChild(a);
+          list.appendChild(li);
+        });
+      })
+      .catch(err => {
+        document.getElementById("macro-list").innerHTML =
+          "<li>Error loading macros.</li>";
+        console.error(err);
+      });
+  </script>
+
+</body>
+</html>
