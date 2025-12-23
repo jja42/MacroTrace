@@ -48,10 +48,20 @@
       color: #111;
     }
 
+    .divider {
+      border-top: 2px solid #444;
+      margin: 20px 0;
+    }
+
     .footer {
       margin-top: 40px;
       font-size: 0.9em;
       color: #777;
+    }
+
+    .description {
+      color: #aaa;
+      margin-left: 6px;
     }
   </style>
 </head>
@@ -60,8 +70,13 @@
   <h1>Macro Library</h1>
   <p>Download and share input macros.</p>
 
+  <!-- Upload button -->
   <button onclick="window.location.href='submit.html'">Submit a Macro</button>
 
+  <!-- Divider -->
+  <div class="divider"></div>
+
+  <!-- Macro list -->
   <ul id="macro-list">
     <li>Loading…</li>
   </ul>
@@ -85,19 +100,26 @@
           return;
         }
 
-      macros.forEach(m => {
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-      a.href = "macros/" + m.file;
-      a.textContent = m.name;
+        macros.forEach(m => {
+          const li = document.createElement("li");
 
-      const desc = document.createElement("span");
-      desc.textContent = m.description ? " – " + m.description : "";
-      desc.style.color = "#aaa";
+          // Download link instead of raw navigation
+          const a = document.createElement("a");
+          a.href = "macros/" + m.file;
+          a.download = m.file; // forces download
+          a.textContent = m.name;
 
-      li.appendChild(a);
-      li.appendChild(desc);
-      list.appendChild(li);
+          li.appendChild(a);
+
+          // Description
+          if (m.description) {
+            const desc = document.createElement("span");
+            desc.textContent = " – " + m.description;
+            desc.className = "description";
+            li.appendChild(desc);
+          }
+
+          list.appendChild(li);
         });
       })
       .catch(err => {
