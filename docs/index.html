@@ -30,13 +30,22 @@
       margin: 8px 0;
     }
 
-    a {
+    a, button {
       color: #6cf;
       text-decoration: none;
+      background: none;
+      border: 2px solid #6cf;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 12px;
+      display: inline-block;
     }
 
-    a:hover {
-      text-decoration: underline;
+    a:hover, button:hover {
+      background-color: #6cf;
+      color: #111;
     }
 
     .footer {
@@ -50,6 +59,8 @@
 
   <h1>Macro Library</h1>
   <p>Download and share input macros.</p>
+
+  <button onclick="window.location.href='submit.html'">Submit a Macro</button>
 
   <ul id="macro-list">
     <li>Loading…</li>
@@ -74,13 +85,19 @@
           return;
         }
 
-        macros.forEach(m => {
-          const li = document.createElement("li");
-          const a = document.createElement("a");
-          a.href = "macros/" + m.file;
-          a.textContent = m.name;
-          li.appendChild(a);
-          list.appendChild(li);
+      macros.forEach(m => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = "macros/" + m.file;
+      a.textContent = m.name;
+
+      const desc = document.createElement("span");
+      desc.textContent = m.description ? " – " + m.description : "";
+      desc.style.color = "#aaa";
+
+      li.appendChild(a);
+      li.appendChild(desc);
+      list.appendChild(li);
         });
       })
       .catch(err => {

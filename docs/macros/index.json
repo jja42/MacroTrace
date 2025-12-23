@@ -1,4 +1,5 @@
 [
-  { "name": "Hello World", "file": "Hello.json" },
-  { "name": "Bee Movie", "file": "Bee.json" }
+  { "name": "Hello World", "description": "Types 'Hello World'", "file": "Hello.json" },
+  { "name": "Close Window", "description": "Moves Mouse to Top Right and Clicks to Close Window", "file": "CloseWindow.json" },
+  { "name": "Bee Movie", "description": "Types 'The Bee Movie'","file": "Bee.json" }
 ]
