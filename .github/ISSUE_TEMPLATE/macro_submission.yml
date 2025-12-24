@@ -1,6 +1,6 @@
 name: Macro Submission
 description: Submit a Macro to be added to the library
-title: "[Macro]: "
+title: "[Macro Upload]: (Add Title Here)"
 labels: ["macro-submission"]
 body:
   - type: markdown
