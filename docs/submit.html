@@ -1,93 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Submit a Macro</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 0 20px;
-      background: #111;
-      color: #eee;
-    }
+<script>
+  UPLOADCARE_PUBLIC_KEY = "71d9c7711d30fbb0005b";
+</script>
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 
-    h1 {
-      margin-bottom: 0.2em;
-    }
+<form>
+  <label>Macro Name</label>
+  <input type="text" id="name">
 
-    form {
-      display: flex;
-      flex-direction: column;
-    }
+  <label>Description</label>
+  <textarea id="description"></textarea>
 
-    label {
-      margin: 12px 0 4px;
-    }
+  <label>Macro File</label>
+  <input
+    type="hidden"
+    role="uploadcare-uploader"
+    data-clearable
+    data-file-types=".json"
+  >
 
-    input[type="text"],
-    input[type="file"],
-    textarea,
-    button {
-      padding: 8px;
-      border: none;
-      border-radius: 4px;
-      font-size: 1em;
-    }
-
-    button {
-      margin-top: 20px;
-      background-color: #6cf;
-      color: #111;
-      cursor: pointer;
-      border: 2px solid #6cf;
-    }
-
-    button:hover {
-      background-color: #4aa;
-      color: #eee;
-    }
-
-    .back-button {
-      margin-top: 12px;
-      border: 2px solid #eee;
-      background: none;
-      color: #eee;
-    }
-
-    .footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #777;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>Submit a Macro</h1>
-  <p>Please provide your macro JSON file. Max size depends on the backend service.</p>
-
-  <form action="https://formspree.io/f/mvzpllbz" method="POST" enctype="multipart/form-data">
-    <label for="name">Macro Name:</label>
-    <input type="text" id="name" name="name" required>
-
-    <label for="file">JSON File:</label>
-    <input type="file" id="file" name="file" accept=".json" required>
-
-    <label for="description">Description (optional):</label>
-    <textarea id="description" name="description" rows="4" placeholder="Explain what this macro does"></textarea>
-
-    <button type="submit">Submit Macro</button>
-  </form>
-
-  <button class="back-button" onclick="window.location.href='index.html'">
-    ← Back to Library
-  </button>
-
-  <div class="footer">
-    Hosted on GitHub Pages
-  </div>
-
-</body>
-</html>
+  <button type="submit">Submit</button>
+</form>
