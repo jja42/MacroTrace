@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   import-macro:
-    if: contains(github.event.issue.labels.*.name, '[Macro Upload]')
+    if: startsWith(github.event.issue.title, '[Macro Upload]')
     runs-on: ubuntu-latest
 
     steps:
