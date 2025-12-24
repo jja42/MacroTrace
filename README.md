@@ -1,9 +1,10 @@
 # Macro Trace
 
-- A lightweight Windows macro recorder and player with web-based sharing.
-- Built in C.
-- Users can record keyboard and mouse events, save them as JSON macros, and share them through a static website. 
-- Supports almost all Input Types, barring only special keyboard specific keys and extra Mouse Buttons.
+A lightweight Windows macro recorder and player built in C, with web-based sharing.
+
+Users can record keyboard and mouse events, save them as JSON macros, and share them through a static website.  
+
+Supports almost all input types, except for a few special keyboard keys and extra mouse buttons.
 
 ---
 
@@ -12,7 +13,7 @@
 - Record and replay keyboard and mouse events.
 - Supports special keys: Shift, Ctrl, Alt, Windows key, Function keys, etc.
 - Precise timing using high-resolution counters.
-- Upload macros to a static website via GitHub Issue Form.
+- Upload macros to a static website via GitHub Issue Form or the site upload button.
 - Automatic indexing of uploaded macros with descriptions.
 - Cross-user macro sharing without a backend server.
 
@@ -20,51 +21,56 @@
 
 ## Installation
 
-Simply download the latest release
-[Latest](https://github.com/jja42/MacroTrace/releases/tag/Release)
+Download the latest release here:  
+[**Latest Release**](https://github.com/jja42/MacroTrace/releases/tag/Release)
 
-To find more Files or Upload your own visit the Site
-[Macro Library](https://jja42.github.io/MacroTrace/)
+Visit the Macro Library for more files or to upload your own:  
+[**Macro Library**](https://jja42.github.io/MacroTrace/)
 
 ---
 
 ## Usage
 
-Follow the prompts in the program after running the executable file.
-Here's a quick guide.
+### Recording
 
-Recording
-- Type 1 or Record to Record
-- Press whichever inputs you want to record
-- Use Esc Twice to Finish Recording
-- Name your file
+1. Run the executable and choose **Record** (type `1` or `Record`).  
+2. Press the keys or mouse buttons you want to record.  
+3. Press **Esc twice** to finish recording.  
+4. Give your macro a name and save the file.
 
-Replaying
-- Type 2 or Replay to Replay
-- Type the Name of the File you want to Replay
-- Use Caps Lock Twice to Replay a file after loading it
-- Use Esc Twice to Finish Replaying
+### Replaying
 
-Site
-In addition to a program that can record and replay, you can visit the Macro Library to
-- Find additional Macros
-- Upload your own Macros
-- See what others have created
+1. Run the executable and choose **Replay** (type `2` or `Replay`).  
+2. Enter the name of the macro file you want to replay.  
+3. Press **Caps Lock twice** to replay after loading.  
+4. Press **Esc twice** to stop replaying.
+
+### Macro Library Site
+
+[**Macro Library**](https://jja42.github.io/MacroTrace/)
+
+- Browse macros uploaded by other users.  
+- Download macros directly.  
+- Upload your own macros to share with the community.
 
 ---
 
-## Site Features:
+## Site Features
 
-- View macros and their descriptions.
-- Download macros directly.
-- Upload Macros
-- Automatically Updates via Github Workflow to include new submissions
+- View macro names and descriptions.  
+- Download macros directly in JSON format.  
+- Upload new macros with a description.  
+- Automatic updates via GitHub Actions to include new submissions.
 
 ---
 
 ## How to Upload
 
-- Users can submit macros either via a GitHub Issue Form or the Upload Button on the Site
-- Provide a name and description for the macro.
-- Submit .json macro files.
-- GitHub Actions automatically downloads the JSON, updates the index, and deploys it to the static site.
+1. Submit macros via the **GitHub Issue Form** or the **Upload button** on the site.  
+2. Provide a descriptive **name** and **description** for your macro.  
+3. Submit the `.json` macro file.  
+4. GitHub Actions will automatically download your JSON, update the macro index, and deploy it to the site.
+
+---
+
+**Enjoy recording, replaying, and sharing your macros!**
