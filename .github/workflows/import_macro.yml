@@ -38,9 +38,9 @@ jobs:
         id: find_file
         run: |
           set -e
-
-          # Look for uploaded .json attachment URLs
-          URL=$(echo "$ISSUE_BODY" | grep -oE 'https://user-images\.githubusercontent\.com[^ )]+\.json' | head -n 1)
+          
+          # Look for uploaded .json attachment URLs (new GitHub format)
+          URL=$(echo "$ISSUE_BODY" | grep -oE 'https://github\.com/user-attachments/files/[^)]+\.json' | head -n1)
 
           if [ -z "$URL" ]; then
             echo "No JSON attachment found"
