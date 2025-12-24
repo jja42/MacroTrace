@@ -1,5 +1,5 @@
 name: Macro Submission
-description: Submit a macro to be added to the library
+description: Submit a Macro to be added to the library
 title: "[Macro]: "
 labels: ["macro-submission"]
 body:
@@ -14,7 +14,8 @@ body:
     id: name
     attributes:
       label: Macro Name
-      placeholder: "My Cool Macro"
+      description: A short, descriptive name for your macro
+      placeholder: "Type 'Hello World'"
     validations:
       required: true
 
@@ -22,12 +23,20 @@ body:
     id: description
     attributes:
       label: Description
-      placeholder: "What does this macro do?"
+      description: What does this macro do?
+      placeholder: "Types 'HELLO' using Shift + letters"
     validations:
       required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Notes (optional)
+      description: Anything else users should know?
+      placeholder: "Works best in text editors"
 
   - type: markdown
     attributes:
       value: |
         ### Attach your macro file
-        After creating this issue, drag and drop your `.json` file into the comment box below ⬇️
+        After creating this issue, drag and drop your `.json` file into the comment box or click the button above to select and attach it
