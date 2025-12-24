@@ -1,5 +1,22 @@
 [
-  { "name": "Hello World", "description": "Types 'Hello World'", "file": "Hello.json" },
-  { "name": "Close Window", "description": "Moves Mouse to Top Right and Clicks to Close Window", "file": "CloseWindow.json" },
-  { "name": "Bee Movie", "description": "Types 'The Bee Movie'","file": "Bee.json" }
+  {
+    "name": "Bee Movie",
+    "description": "Types 'The Bee Movie'",
+    "file": "Bee.json"
+  },
+  {
+    "name": "Close Window",
+    "description": "Moves Mouse to Top Right and Clicks to Close Window",
+    "file": "CloseWindow.json"
+  },
+  {
+    "name": "GetPaintNet",
+    "file": "GetPaintNet.json",
+    "description": "Opens Microsoft Edge, Navigates to Paint.Net Download Page, Clicks Download Link."
+  },
+  {
+    "name": "Hello World",
+    "description": "Types 'Hello World'",
+    "file": "Hello.json"
+  }
 ]
