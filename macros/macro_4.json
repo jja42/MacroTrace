@@ -1,0 +1,1598 @@
+{
+"Events": [
+{
+"EventNum": 1,
+"EventType": "Key Press",
+"Key": "M",
+"Timestamp": 688
+},
+{
+"EventNum": 2,
+"EventType": "Key Release",
+"Key": "M",
+"Timestamp": 766
+},
+{
+"EventNum": 3,
+"EventType": "Key Press",
+"Key": "I",
+"Timestamp": 844
+},
+{
+"EventNum": 4,
+"EventType": "Key Release",
+"Key": "I",
+"Timestamp": 938
+},
+{
+"EventNum": 5,
+"EventType": "Key Press",
+"Key": "C",
+"Timestamp": 953
+},
+{
+"EventNum": 6,
+"EventType": "Key Release",
+"Key": "C",
+"Timestamp": 1031
+},
+{
+"EventNum": 7,
+"EventType": "Key Press",
+"Key": "R",
+"Timestamp": 1172
+},
+{
+"EventNum": 8,
+"EventType": "Key Release",
+"Key": "R",
+"Timestamp": 1234
+},
+{
+"EventNum": 9,
+"EventType": "Key Press",
+"Key": "O",
+"Timestamp": 1266
+},
+{
+"EventNum": 10,
+"EventType": "Key Release",
+"Key": "O",
+"Timestamp": 1328
+},
+{
+"EventNum": 11,
+"EventType": "Key Press",
+"Key": "S",
+"Timestamp": 1406
+},
+{
+"EventNum": 12,
+"EventType": "Key Release",
+"Key": "S",
+"Timestamp": 1500
+},
+{
+"EventNum": 13,
+"EventType": "Key Press",
+"Key": "O",
+"Timestamp": 1531
+},
+{
+"EventNum": 14,
+"EventType": "Key Release",
+"Key": "O",
+"Timestamp": 1625
+},
+{
+"EventNum": 15,
+"EventType": "Key Press",
+"Key": "F",
+"Timestamp": 1656
+},
+{
+"EventNum": 16,
+"EventType": "Key Release",
+"Key": "F",
+"Timestamp": 1734
+},
+{
+"EventNum": 17,
+"EventType": "Key Press",
+"Key": "T",
+"Timestamp": 1844
+},
+{
+"EventNum": 18,
+"EventType": "Key Release",
+"Key": "T",
+"Timestamp": 1906
+},
+{
+"EventNum": 19,
+"EventType": "Key Press",
+"Key": "Space",
+"Timestamp": 1969
+},
+{
+"EventNum": 20,
+"EventType": "Key Release",
+"Key": "Space",
+"Timestamp": 2031
+},
+{
+"EventNum": 21,
+"EventType": "Key Press",
+"Key": "E",
+"Timestamp": 2094
+},
+{
+"EventNum": 22,
+"EventType": "Key Release",
+"Key": "E",
+"Timestamp": 2156
+},
+{
+"EventNum": 23,
+"EventType": "Key Press",
+"Key": "D",
+"Timestamp": 2266
+},
+{
+"EventNum": 24,
+"EventType": "Key Release",
+"Key": "D",
+"Timestamp": 2328
+},
+{
+"EventNum": 25,
+"EventType": "Key Press",
+"Key": "G",
+"Timestamp": 2453
+},
+{
+"EventNum": 26,
+"EventType": "Key Release",
+"Key": "G",
+"Timestamp": 2500
+},
+{
+"EventNum": 27,
+"EventType": "Key Press",
+"Key": "E",
+"Timestamp": 2625
+},
+{
+"EventNum": 28,
+"EventType": "Key Release",
+"Key": "E",
+"Timestamp": 2672
+},
+{
+"EventNum": 29,
+"EventType": "Key Press",
+"Key": "Enter",
+"Timestamp": 2750
+},
+{
+"EventNum": 30,
+"EventType": "Key Release",
+"Key": "Enter",
+"Timestamp": 2797
+},
+{
+"EventNum": 31,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 637,
+"Y": 595
+},
+"Timestamp": 4516
+},
+{
+"EventNum": 32,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 640,
+"Y": 585
+},
+"Timestamp": 4516
+},
+{
+"EventNum": 33,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 648,
+"Y": 568
+},
+"Timestamp": 4531
+},
+{
+"EventNum": 34,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 651,
+"Y": 563
+},
+"Timestamp": 4531
+},
+{
+"EventNum": 35,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 655,
+"Y": 554
+},
+"Timestamp": 4547
+},
+{
+"EventNum": 36,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 656,
+"Y": 550
+},
+"Timestamp": 4547
+},
+{
+"EventNum": 37,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 660,
+"Y": 540
+},
+"Timestamp": 4563
+},
+{
+"EventNum": 38,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 665,
+"Y": 526
+},
+"Timestamp": 4563
+},
+{
+"EventNum": 39,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 668,
+"Y": 515
+},
+"Timestamp": 4578
+},
+{
+"EventNum": 40,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 673,
+"Y": 496
+},
+"Timestamp": 4578
+},
+{
+"EventNum": 41,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 681,
+"Y": 473
+},
+"Timestamp": 4594
+},
+{
+"EventNum": 42,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 684,
+"Y": 460
+},
+"Timestamp": 4594
+},
+{
+"EventNum": 43,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 690,
+"Y": 437
+},
+"Timestamp": 4609
+},
+{
+"EventNum": 44,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 696,
+"Y": 412
+},
+"Timestamp": 4609
+},
+{
+"EventNum": 45,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 700,
+"Y": 389
+},
+"Timestamp": 4625
+},
+{
+"EventNum": 46,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 701,
+"Y": 366
+},
+"Timestamp": 4625
+},
+{
+"EventNum": 47,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 704,
+"Y": 343
+},
+"Timestamp": 4641
+},
+{
+"EventNum": 48,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 706,
+"Y": 294
+},
+"Timestamp": 4641
+},
+{
+"EventNum": 49,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 706,
+"Y": 272
+},
+"Timestamp": 4656
+},
+{
+"EventNum": 50,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 708,
+"Y": 234
+},
+"Timestamp": 4656
+},
+{
+"EventNum": 51,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 708,
+"Y": 204
+},
+"Timestamp": 4672
+},
+{
+"EventNum": 52,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 708,
+"Y": 182
+},
+"Timestamp": 4672
+},
+{
+"EventNum": 53,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 708,
+"Y": 159
+},
+"Timestamp": 4688
+},
+{
+"EventNum": 54,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 705,
+"Y": 136
+},
+"Timestamp": 4688
+},
+{
+"EventNum": 55,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 704,
+"Y": 127
+},
+"Timestamp": 4703
+},
+{
+"EventNum": 56,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 116
+},
+"Timestamp": 4703
+},
+{
+"EventNum": 57,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 111
+},
+"Timestamp": 4719
+},
+{
+"EventNum": 58,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 108
+},
+"Timestamp": 4719
+},
+{
+"EventNum": 59,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 105
+},
+"Timestamp": 4734
+},
+{
+"EventNum": 60,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 103
+},
+"Timestamp": 4734
+},
+{
+"EventNum": 61,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 102
+},
+"Timestamp": 4750
+},
+{
+"EventNum": 62,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 101
+},
+"Timestamp": 4750
+},
+{
+"EventNum": 63,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 101
+},
+"Timestamp": 4766
+},
+{
+"EventNum": 64,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 100
+},
+"Timestamp": 4797
+},
+{
+"EventNum": 65,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 99
+},
+"Timestamp": 4938
+},
+{
+"EventNum": 66,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 97
+},
+"Timestamp": 4953
+},
+{
+"EventNum": 67,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 95
+},
+"Timestamp": 4953
+},
+{
+"EventNum": 68,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 93
+},
+"Timestamp": 4969
+},
+{
+"EventNum": 69,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 93
+},
+"Timestamp": 4969
+},
+{
+"EventNum": 70,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 92
+},
+"Timestamp": 5016
+},
+{
+"EventNum": 71,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 92
+},
+"Timestamp": 5031
+},
+{
+"EventNum": 72,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 91
+},
+"Timestamp": 5031
+},
+{
+"EventNum": 73,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 91
+},
+"Timestamp": 5047
+},
+{
+"EventNum": 74,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 90
+},
+"Timestamp": 5063
+},
+{
+"EventNum": 75,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 89
+},
+"Timestamp": 5078
+},
+{
+"EventNum": 76,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 89
+},
+"Timestamp": 5078
+},
+{
+"EventNum": 77,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 88
+},
+"Timestamp": 5094
+},
+{
+"EventNum": 78,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 703,
+"Y": 86
+},
+"Timestamp": 5094
+},
+{
+"EventNum": 79,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 704,
+"Y": 85
+},
+"Timestamp": 5109
+},
+{
+"EventNum": 80,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 705,
+"Y": 83
+},
+"Timestamp": 5109
+},
+{
+"EventNum": 81,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 705,
+"Y": 82
+},
+"Timestamp": 5125
+},
+{
+"EventNum": 82,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 705,
+"Y": 81
+},
+"Timestamp": 5125
+},
+{
+"EventNum": 83,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 705,
+"Y": 80
+},
+"Timestamp": 5141
+},
+{
+"EventNum": 84,
+"EventType": "Mouse Button Press",
+"Button": "Left Click",
+"Timestamp": 5313
+},
+{
+"EventNum": 85,
+"EventType": "Mouse Button Release",
+"Button": "Left Click",
+"Timestamp": 5406
+},
+{
+"EventNum": 86,
+"EventType": "Key Press",
+"Key": "D",
+"Timestamp": 6953
+},
+{
+"EventNum": 87,
+"EventType": "Key Release",
+"Key": "D",
+"Timestamp": 7047
+},
+{
+"EventNum": 88,
+"EventType": "Key Press",
+"Key": "O",
+"Timestamp": 7047
+},
+{
+"EventNum": 89,
+"EventType": "Key Release",
+"Key": "O",
+"Timestamp": 7109
+},
+{
+"EventNum": 90,
+"EventType": "Key Press",
+"Key": "T",
+"Timestamp": 7266
+},
+{
+"EventNum": 91,
+"EventType": "Key Release",
+"Key": "T",
+"Timestamp": 7344
+},
+{
+"EventNum": 92,
+"EventType": "Key Press",
+"Key": "P",
+"Timestamp": 7859
+},
+{
+"EventNum": 93,
+"EventType": "Key Release",
+"Key": "P",
+"Timestamp": 7922
+},
+{
+"EventNum": 94,
+"EventType": "Key Press",
+"Key": "D",
+"Timestamp": 8281
+},
+{
+"EventNum": 95,
+"EventType": "Key Release",
+"Key": "D",
+"Timestamp": 8328
+},
+{
+"EventNum": 96,
+"EventType": "Key Press",
+"Key": "N",
+"Timestamp": 8375
+},
+{
+"EventNum": 97,
+"EventType": "Key Release",
+"Key": "N",
+"Timestamp": 8438
+},
+{
+"EventNum": 98,
+"EventType": "Key Press",
+"Key": ".",
+"Timestamp": 8656
+},
+{
+"EventNum": 99,
+"EventType": "Key Release",
+"Key": ".",
+"Timestamp": 8734
+},
+{
+"EventNum": 100,
+"EventType": "Key Press",
+"Key": "C",
+"Timestamp": 8875
+},
+{
+"EventNum": 101,
+"EventType": "Key Release",
+"Key": "C",
+"Timestamp": 8953
+},
+{
+"EventNum": 102,
+"EventType": "Key Press",
+"Key": "O",
+"Timestamp": 8953
+},
+{
+"EventNum": 103,
+"EventType": "Key Release",
+"Key": "O",
+"Timestamp": 9031
+},
+{
+"EventNum": 104,
+"EventType": "Key Press",
+"Key": "M",
+"Timestamp": 9063
+},
+{
+"EventNum": 105,
+"EventType": "Key Release",
+"Key": "M",
+"Timestamp": 9125
+},
+{
+"EventNum": 106,
+"EventType": "Key Press",
+"Key": "/",
+"Timestamp": 9328
+},
+{
+"EventNum": 107,
+"EventType": "Key Release",
+"Key": "/",
+"Timestamp": 9375
+},
+{
+"EventNum": 108,
+"EventType": "Key Press",
+"Key": "D",
+"Timestamp": 9859
+},
+{
+"EventNum": 109,
+"EventType": "Key Release",
+"Key": "D",
+"Timestamp": 9922
+},
+{
+"EventNum": 110,
+"EventType": "Key Press",
+"Key": "O",
+"Timestamp": 10078
+},
+{
+"EventNum": 111,
+"EventType": "Key Release",
+"Key": "O",
+"Timestamp": 10156
+},
+{
+"EventNum": 112,
+"EventType": "Key Press",
+"Key": "W",
+"Timestamp": 10203
+},
+{
+"EventNum": 113,
+"EventType": "Key Release",
+"Key": "W",
+"Timestamp": 10281
+},
+{
+"EventNum": 114,
+"EventType": "Key Press",
+"Key": "N",
+"Timestamp": 10359
+},
+{
+"EventNum": 115,
+"EventType": "Key Release",
+"Key": "N",
+"Timestamp": 10438
+},
+{
+"EventNum": 116,
+"EventType": "Key Press",
+"Key": "L",
+"Timestamp": 10672
+},
+{
+"EventNum": 117,
+"EventType": "Key Release",
+"Key": "L",
+"Timestamp": 10750
+},
+{
+"EventNum": 118,
+"EventType": "Key Press",
+"Key": "O",
+"Timestamp": 10859
+},
+{
+"EventNum": 119,
+"EventType": "Key Release",
+"Key": "O",
+"Timestamp": 10922
+},
+{
+"EventNum": 120,
+"EventType": "Key Press",
+"Key": "A",
+"Timestamp": 10922
+},
+{
+"EventNum": 121,
+"EventType": "Key Press",
+"Key": "D",
+"Timestamp": 11016
+},
+{
+"EventNum": 122,
+"EventType": "Key Release",
+"Key": "A",
+"Timestamp": 11031
+},
+{
+"EventNum": 123,
+"EventType": "Key Release",
+"Key": "D",
+"Timestamp": 11141
+},
+{
+"EventNum": 124,
+"EventType": "Key Press",
+"Key": "S",
+"Timestamp": 11141
+},
+{
+"EventNum": 125,
+"EventType": "Key Release",
+"Key": "S",
+"Timestamp": 11234
+},
+{
+"EventNum": 126,
+"EventType": "Key Press",
+"Key": "/",
+"Timestamp": 11484
+},
+{
+"EventNum": 127,
+"EventType": "Key Release",
+"Key": "/",
+"Timestamp": 11563
+},
+{
+"EventNum": 128,
+"EventType": "Key Press",
+"Key": "P",
+"Timestamp": 11781
+},
+{
+"EventNum": 129,
+"EventType": "Key Release",
+"Key": "P",
+"Timestamp": 11859
+},
+{
+"EventNum": 130,
+"EventType": "Key Press",
+"Key": "D",
+"Timestamp": 11922
+},
+{
+"EventNum": 131,
+"EventType": "Key Release",
+"Key": "D",
+"Timestamp": 11984
+},
+{
+"EventNum": 132,
+"EventType": "Key Press",
+"Key": "N",
+"Timestamp": 12359
+},
+{
+"EventNum": 133,
+"EventType": "Key Release",
+"Key": "N",
+"Timestamp": 12438
+},
+{
+"EventNum": 134,
+"EventType": "Key Press",
+"Key": ".",
+"Timestamp": 12641
+},
+{
+"EventNum": 135,
+"EventType": "Key Release",
+"Key": ".",
+"Timestamp": 12703
+},
+{
+"EventNum": 136,
+"EventType": "Key Press",
+"Key": "H",
+"Timestamp": 12906
+},
+{
+"EventNum": 137,
+"EventType": "Key Release",
+"Key": "H",
+"Timestamp": 12969
+},
+{
+"EventNum": 138,
+"EventType": "Key Press",
+"Key": "T",
+"Timestamp": 13063
+},
+{
+"EventNum": 139,
+"EventType": "Key Release",
+"Key": "T",
+"Timestamp": 13141
+},
+{
+"EventNum": 140,
+"EventType": "Key Press",
+"Key": "M",
+"Timestamp": 13203
+},
+{
+"EventNum": 141,
+"EventType": "Key Release",
+"Key": "M",
+"Timestamp": 13266
+},
+{
+"EventNum": 142,
+"EventType": "Key Press",
+"Key": "L",
+"Timestamp": 13328
+},
+{
+"EventNum": 143,
+"EventType": "Key Release",
+"Key": "L",
+"Timestamp": 13406
+},
+{
+"EventNum": 144,
+"EventType": "Key Press",
+"Key": "Enter",
+"Timestamp": 13625
+},
+{
+"EventNum": 145,
+"EventType": "Key Release",
+"Key": "Enter",
+"Timestamp": 13688
+},
+{
+"EventNum": 146,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 706,
+"Y": 81
+},
+"Timestamp": 14797
+},
+{
+"EventNum": 147,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 713,
+"Y": 85
+},
+"Timestamp": 14813
+},
+{
+"EventNum": 148,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 723,
+"Y": 93
+},
+"Timestamp": 14828
+},
+{
+"EventNum": 149,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 733,
+"Y": 100
+},
+"Timestamp": 14828
+},
+{
+"EventNum": 150,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 742,
+"Y": 105
+},
+"Timestamp": 14828
+},
+{
+"EventNum": 151,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 755,
+"Y": 113
+},
+"Timestamp": 14844
+},
+{
+"EventNum": 152,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 767,
+"Y": 119
+},
+"Timestamp": 14844
+},
+{
+"EventNum": 153,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 789,
+"Y": 129
+},
+"Timestamp": 14859
+},
+{
+"EventNum": 154,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 812,
+"Y": 140
+},
+"Timestamp": 14859
+},
+{
+"EventNum": 155,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 832,
+"Y": 148
+},
+"Timestamp": 14875
+},
+{
+"EventNum": 156,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 854,
+"Y": 156
+},
+"Timestamp": 14875
+},
+{
+"EventNum": 157,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 874,
+"Y": 163
+},
+"Timestamp": 14891
+},
+{
+"EventNum": 158,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 896,
+"Y": 168
+},
+"Timestamp": 14891
+},
+{
+"EventNum": 159,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 907,
+"Y": 172
+},
+"Timestamp": 14906
+},
+{
+"EventNum": 160,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 926,
+"Y": 177
+},
+"Timestamp": 14906
+},
+{
+"EventNum": 161,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 936,
+"Y": 179
+},
+"Timestamp": 14922
+},
+{
+"EventNum": 162,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 947,
+"Y": 181
+},
+"Timestamp": 14922
+},
+{
+"EventNum": 163,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 956,
+"Y": 183
+},
+"Timestamp": 14938
+},
+{
+"EventNum": 164,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 963,
+"Y": 184
+},
+"Timestamp": 14938
+},
+{
+"EventNum": 165,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 966,
+"Y": 185
+},
+"Timestamp": 14953
+},
+{
+"EventNum": 166,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 970,
+"Y": 185
+},
+"Timestamp": 14953
+},
+{
+"EventNum": 167,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 971,
+"Y": 186
+},
+"Timestamp": 14969
+},
+{
+"EventNum": 168,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 971,
+"Y": 186
+},
+"Timestamp": 14969
+},
+{
+"EventNum": 169,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 973,
+"Y": 187
+},
+"Timestamp": 15063
+},
+{
+"EventNum": 170,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 974,
+"Y": 188
+},
+"Timestamp": 15078
+},
+{
+"EventNum": 171,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 976,
+"Y": 190
+},
+"Timestamp": 15078
+},
+{
+"EventNum": 172,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 977,
+"Y": 190
+},
+"Timestamp": 15094
+},
+{
+"EventNum": 173,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 977,
+"Y": 191
+},
+"Timestamp": 15094
+},
+{
+"EventNum": 174,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 977,
+"Y": 192
+},
+"Timestamp": 15109
+},
+{
+"EventNum": 175,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 978,
+"Y": 192
+},
+"Timestamp": 15109
+},
+{
+"EventNum": 176,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 978,
+"Y": 193
+},
+"Timestamp": 15141
+},
+{
+"EventNum": 177,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 978,
+"Y": 193
+},
+"Timestamp": 15156
+},
+{
+"EventNum": 178,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 978,
+"Y": 195
+},
+"Timestamp": 15156
+},
+{
+"EventNum": 179,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 978,
+"Y": 195
+},
+"Timestamp": 15172
+},
+{
+"EventNum": 180,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 978,
+"Y": 196
+},
+"Timestamp": 15172
+},
+{
+"EventNum": 181,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 978,
+"Y": 197
+},
+"Timestamp": 15188
+},
+{
+"EventNum": 182,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 978,
+"Y": 197
+},
+"Timestamp": 15203
+},
+{
+"EventNum": 183,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 979,
+"Y": 198
+},
+"Timestamp": 15297
+},
+{
+"EventNum": 184,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 979,
+"Y": 199
+},
+"Timestamp": 15297
+},
+{
+"EventNum": 185,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 979,
+"Y": 200
+},
+"Timestamp": 15313
+},
+{
+"EventNum": 186,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 979,
+"Y": 200
+},
+"Timestamp": 15328
+},
+{
+"EventNum": 187,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 979,
+"Y": 202
+},
+"Timestamp": 15328
+},
+{
+"EventNum": 188,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 979,
+"Y": 202
+},
+"Timestamp": 15344
+},
+{
+"EventNum": 189,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 979,
+"Y": 203
+},
+"Timestamp": 15359
+},
+{
+"EventNum": 190,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 979,
+"Y": 204
+},
+"Timestamp": 15375
+},
+{
+"EventNum": 191,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 979,
+"Y": 205
+},
+"Timestamp": 15375
+},
+{
+"EventNum": 192,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 979,
+"Y": 205
+},
+"Timestamp": 15391
+},
+{
+"EventNum": 193,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 979,
+"Y": 206
+},
+"Timestamp": 15406
+},
+{
+"EventNum": 194,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 979,
+"Y": 206
+},
+"Timestamp": 15484
+},
+{
+"EventNum": 195,
+"EventType": "Mouse Button Press",
+"Button": "Left Click",
+"Timestamp": 15656
+},
+{
+"EventNum": 196,
+"EventType": "Mouse Movement",
+"Position": 
+{
+"X": 979,
+"Y": 206
+},
+"Timestamp": 15703
+},
+{
+"EventNum": 197,
+"EventType": "Mouse Button Release",
+"Button": "Left Click",
+"Timestamp": 15734
+}
+]
+}
