@@ -1,9 +1,9 @@
 # Macro Trace
 
-A lightweight Windows macro recorder and player with web-based sharing.
-Built in C
-Users can record keyboard and mouse events, save them as JSON macros, and share them through a static website. 
-Supports almost all Input Types, barring only special keyboard specific keys and extra Mouse Buttons.
+- A lightweight Windows macro recorder and player with web-based sharing.
+- Built in C.
+- Users can record keyboard and mouse events, save them as JSON macros, and share them through a static website. 
+- Supports almost all Input Types, barring only special keyboard specific keys and extra Mouse Buttons.
 
 ---
 
