@@ -33,19 +33,19 @@ To find more Files or Upload your own visit the Site
 Follow the prompts in the program after running the executable file.
 Here's a quick guide.
 
-#Recording
+Recording
 - Type 1 or Record to Record
 - Press whichever inputs you want to record
 - Use Esc Twice to Finish Recording
 - Name your file
 
-#Replaying
+Replaying
 - Type 2 or Replay to Replay
 - Type the Name of the File you want to Replay
 - Use Caps Lock Twice to Replay a file after loading it
 - Use Esc Twice to Finish Replaying
 
-#Site
+Site
 In addition to a program that can record and replay, you can visit the Macro Library to
 - Find additional Macros
 - Upload your own Macros
