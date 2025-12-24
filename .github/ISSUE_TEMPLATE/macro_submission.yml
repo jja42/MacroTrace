@@ -3,6 +3,13 @@ description: Submit a macro to be added to the library
 title: "[Macro]: "
 labels: ["macro-submission"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Submit a Macro
+        Please fill out the form below.
+        After submitting, **attach your `.json` macro file** to the issue.
+
   - type: input
     id: name
     attributes:
@@ -19,10 +26,8 @@ body:
     validations:
       required: true
 
-  - type: file
-    id: macro_file
+  - type: markdown
     attributes:
-      label: Macro JSON File
-      accept: ".json"
-    validations:
-      required: true
+      value: |
+        ### Attach your macro file
+        After creating this issue, drag and drop your `.json` file into the comment box below ⬇️
