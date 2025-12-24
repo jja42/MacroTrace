@@ -195,12 +195,25 @@ int InputEventToSendInput(InputEvent* event, INPUT* inputs)
             if (!vk) return 0;
 
             inputs[0].type = INPUT_KEYBOARD;
-            inputs[0].ki.wScan = MapVirtualKey(vk, MAPVK_VK_TO_VSC);
-            inputs[0].ki.dwFlags = KEYEVENTF_SCANCODE;
+            if (vk == VK_LWIN || vk == VK_RWIN || vk == VK_RCONTROL || vk == VK_RMENU) {
+            //Special keys
+                inputs[0].ki.wScan = MapVirtualKey(vk, MAPVK_VK_TO_VSC);
+                inputs[0].ki.dwFlags = KEYEVENTF_SCANCODE | KEYEVENTF_EXTENDEDKEY;
+            } 
+            else if (strlen(event->data.ke.key) == 1) {
+            //Normal keys
+                inputs[0].ki.wScan = MapVirtualKey(vk, MAPVK_VK_TO_VSC);
+                inputs[0].ki.dwFlags = KEYEVENTF_SCANCODE;
+            } 
+            else {
+            //Use virtual key for other special keys
+                inputs[0].ki.wVk = vk;
+                inputs[0].ki.dwFlags = 0;
+            }
 
-            if (event->data.ke.release)
+            if (event->data.ke.release){
                 inputs[0].ki.dwFlags |= KEYEVENTF_KEYUP;
-
+            }
             return 1;
         }
 
