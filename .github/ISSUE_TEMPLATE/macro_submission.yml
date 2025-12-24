@@ -32,4 +32,4 @@ body:
     attributes:
       value: |
         ### Attach your macro file
-        After creating this issue, drag and drop your `.json` file into the comment box or click the button above to select and attach it
+        Don't forget to drag and drop your `.json` file into the comment box or click the button above to select and attach it
