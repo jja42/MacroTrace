@@ -28,13 +28,6 @@ body:
     validations:
       required: true
 
-  - type: textarea
-    id: notes
-    attributes:
-      label: Additional Notes (optional)
-      description: Anything else users should know?
-      placeholder: "Works best in text editors"
-
   - type: markdown
     attributes:
       value: |

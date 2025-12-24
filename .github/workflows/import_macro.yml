@@ -1,0 +1,135 @@
+name: Import Macro Submission
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  import-macro:
+    if: contains(github.event.issue.labels.*.name, 'macro-submission')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract issue data
+        id: issue
+        run: |
+          echo "ISSUE_NUMBER=${{ github.event.issue.number }}" >> $GITHUB_ENV
+          echo "ISSUE_BODY<<EOF" >> $GITHUB_ENV
+          echo "${{ github.event.issue.body }}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Extract description
+        run: |
+          DESC=$(echo "$ISSUE_BODY" | awk '
+            /^### Description/ {found=1; next}
+            /^### / {found=0}
+            found {print}
+          ' | sed '/^$/d' | tr '\n' ' ')
+          echo "DESCRIPTION=$DESC" >> $GITHUB_ENV
+
+      - name: Find attached JSON file
+        id: find_file
+        run: |
+          set -e
+
+          # Look for uploaded .json attachment URLs
+          URL=$(echo "$ISSUE_BODY" | grep -oE 'https://user-images\.githubusercontent\.com[^ )]+\.json' | head -n 1)
+
+          if [ -z "$URL" ]; then
+            echo "No JSON attachment found"
+            exit 1
+          fi
+
+          echo "FILE_URL=$URL" >> $GITHUB_ENV
+
+      - name: Download macro file
+        run: |
+          mkdir -p macros
+          curl -L "$FILE_URL" -o macros/submitted_macro.json
+
+      - name: Validate JSON
+        run: |
+          python3 - <<'EOF'
+          import json, sys
+
+          try:
+              with open("macros/submitted_macro.json") as f:
+                  json.load(f)
+          except Exception as e:
+              print("Invalid JSON:", e)
+              sys.exit(1)
+          EOF
+
+      - name: Generate safe filename
+        id: filename
+        run: |
+          NAME=$(echo "$ISSUE_BODY" | grep -m1 -E '^### Macro Name' -A1 | tail -n1 | tr -cd '[:alnum:]_-')
+          if [ -z "$NAME" ]; then
+            NAME="macro_${ISSUE_NUMBER}"
+          fi
+          echo "FILENAME=${NAME}.json" >> $GITHUB_ENV
+
+      - name: Move macro into library
+        run: |
+          mv macros/submitted_macro.json "macros/$FILENAME"
+
+      - name: Update index.json
+        run: |
+          python3 - <<'EOF'
+          import json, os
+
+          macros_dir = "macros"
+          index_path = os.path.join(macros_dir, "index.json")
+
+          new_file = os.environ["FILENAME"]
+          description = os.environ.get("DESCRIPTION", "")
+
+          entries = []
+
+          # Load existing index if present
+          if os.path.exists(index_path):
+              with open(index_path) as f:
+                  entries = json.load(f)
+
+          # Remove any existing entry for this file
+          entries = [e for e in entries if e["file"] != new_file]
+
+          entries.append({
+              "name": new_file.replace(".json", ""),
+              "file": new_file,
+              "description": description
+          })
+
+          # Sort alphabetically
+          entries.sort(key=lambda e: e["name"].lower())
+
+          with open(index_path, "w") as f:
+              json.dump(entries, f, indent=2)
+          EOF
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add macros/
+          git commit -m "Add macro from issue #$ISSUE_NUMBER"
+          git push
+
+      - name: Close issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: "closed",
+              body: "Macro successfully added to the library. Thank you!"
+            })
