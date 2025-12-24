@@ -8,7 +8,7 @@ body:
       value: |
         ## Submit a Macro
         Please fill out the form below.
-        After submitting, **attach your `.json` macro file** to the issue.
+        Don't forget to **attach your `.json` macro file** to this issue.
 
   - type: input
     id: name
