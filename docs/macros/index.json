@@ -12,7 +12,7 @@
   {
     "name": "GetPaintNet",
     "file": "GetPaintNet.json",
-    "description": "Opens Microsoft Edge, Navigates to Paint.Net Download Page, Clicks Download Link [GetPaint.json](https://github.com/user-attachments/files/24323483/GetPaint.json) "
+    "description": "Opens Microsoft Edge, Navigates to Paint.Net Download Page, Clicks Download Link."
   },
   {
     "name": "Hello World",
