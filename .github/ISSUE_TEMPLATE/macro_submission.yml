@@ -1,5 +1,5 @@
 name: Macro Submission
-description: Submit a Macro to be added to the library
+description: Submit a Macro to be added to the library. Do Not Remove [Macro Upload] From Title
 title: "[Macro Upload]: (Add Title Here)"
 labels: ["macro-submission"]
 body:
