@@ -70,7 +70,12 @@ jobs:
       - name: Generate safe filename
         id: filename
         run: |
-          NAME=$(echo "$ISSUE_BODY" | grep -m1 -E '^### Macro Name' -A1 | tail -n1 | tr -cd '[:alnum:]_-')
+          # Extract the first non-empty line after '### Macro Name'
+          NAME=$(echo "$ISSUE_BODY" | awk '
+            /^### Macro Name/ {found=1; next}
+            found && NF {print; exit}
+          ' | tr -cd '[:alnum:]_-')
+
           if [ -z "$NAME" ]; then
             NAME="macro_${ISSUE_NUMBER}"
           fi
@@ -78,14 +83,14 @@ jobs:
 
       - name: Move macro into library
         run: |
-          mv macros/submitted_macro.json "macros/$FILENAME"
+          mv macros/submitted_macro.json "docs/macros/$FILENAME"
 
       - name: Update index.json
         run: |
           python3 - <<'EOF'
           import json, os
 
-          macros_dir = "macros"
+          macros_dir = "docs/macros"
           index_path = os.path.join(macros_dir, "index.json")
 
           new_file = os.environ["FILENAME"]
