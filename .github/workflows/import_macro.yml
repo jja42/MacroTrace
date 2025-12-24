@@ -24,14 +24,17 @@ jobs:
           echo "ISSUE_BODY<<EOF" >> $GITHUB_ENV
           echo "${{ github.event.issue.body }}" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-
+          
       - name: Extract description
         run: |
           DESC=$(echo "$ISSUE_BODY" | awk '
             /^### Description/ {found=1; next}
             /^### / {found=0}
             found {print}
-          ' | sed '/^$/d' | tr '\n' ' ')
+          ' | sed '/^$/d' \
+            | sed 's/\[.*\](https:\/\/github\.com\/user-attachments\/files\/[^)]*)//g' \
+            | tr '\n' ' ')
+
           echo "DESCRIPTION=$DESC" >> $GITHUB_ENV
 
       - name: Find attached JSON file
