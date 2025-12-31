@@ -69,6 +69,11 @@ Visit the Macro Library for more files or to upload your own:
 1. Submit macros via the **GitHub Issue Form** or the **Upload button** on the site.  
 2. Provide a descriptive **name** and **description** for your macro.  
 3. Submit the `.json` macro file.  
+
+---
+
+## Contributing
+If you'd like to contribute, please fork the repository and open a pull request.
 4. GitHub Actions will automatically download your JSON, update the macro index, and deploy it to the site.
 
 ---
