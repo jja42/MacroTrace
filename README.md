@@ -19,7 +19,7 @@ Supports almost all input types, except for a few special keyboard keys and extr
 
 ---
 
-## Installation
+## Quick Start
 
 Download the latest release here:  
 [**Latest Release**](https://github.com/jja42/MacroTrace/releases/tag/Release)
@@ -69,6 +69,14 @@ Visit the Macro Library for more files or to upload your own:
 1. Submit macros via the **GitHub Issue Form** or the **Upload button** on the site.  
 2. Provide a descriptive **name** and **description** for your macro.  
 3. Submit the `.json` macro file.  
+
+---
+
+## Motivation
+
+I wanted to make something simple to use but with a lot of possibility. What better way than to let the community decide what a project can do?
+Macrotrace keeps things straightforward with a clean command line interface and maximizes performance with an optimized C codebase.
+No Installation. No tweaks. Open, record and playback. Easy to import new files and export them for others to use.
 
 ---
 
