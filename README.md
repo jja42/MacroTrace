@@ -75,7 +75,7 @@ Visit the Macro Library for more files or to upload your own:
 ## Motivation
 
 I wanted to make something simple to use but with a lot of possibility. What better way than to let the community decide what a project can do?
-Macrotrace keeps things straightforward with a clean command line interface and maximizes performance with an optimized C codebase.
+MacroTrace keeps things straightforward with a clean command line interface and maximizes performance with an optimized C codebase.
 No Installation. No tweaks. Open, record and playback. Easy to import new files and export them for others to use.
 
 ---
